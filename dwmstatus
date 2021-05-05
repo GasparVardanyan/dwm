@@ -1,0 +1,76 @@
+#!/bin/sh
+
+volp=`pamixer --get-volume`
+cores="$(grep -c "^processor" /proc/cpuinfo)"
+#cores="$(sysctl -n hw.ncpu)" # BSD
+cpu="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+cpu="$((${cpu/\.*} / ${cores:-1}))"
+[[ `pamixer --get-mute` == true ]] && vols='' || vols=''
+wireless=`grep ^w /proc/net/wireless`
+
+
+
+:<<'comment'
+bat_status=""
+del_tmp=""
+for bat in  /sys/class/power_supply/BAT*
+do
+	bats="$(cat $bat/status)"
+	batp="$(cat $bat/capacity)"
+
+	if [ $bats == 'Fully' ] ; then
+		bats=''
+	else
+		if [ $bats == 'Charging' ] ; then
+		   bats=''
+		else
+			if [ $batp -le 20 ] ; then
+				bats=''
+			elif [ $batp -le 40 ] ; then
+				bats=''
+			elif [ $batp -le 60 ] ; then
+				bats=''
+			elif [ $batp -le 80 ] ; then
+				bats=''
+			else
+				bats=''
+			fi
+		fi
+		bats="$bats $batp%"
+	fi
+	bat_status+="$del_tmp$bats"
+	del_tmp=" "
+done
+comment
+
+
+
+batp=`upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep percentage | sed 's/[[:space:]]\+.*[[:space:]]\+//;s/%//'`
+bat_status=`upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep state | sed 's/[[:space:]]\+.*[[:space:]]\+//'`
+
+if [ $bat_status == 'fully-charged' ] ; then
+	bat_status=''
+else
+	if [ $bat_status == 'charging' ] ; then
+	   bat_status=''
+	else
+		if [ $batp -le 20 ] ; then
+			bat_status=''
+		elif [ $batp -le 40 ] ; then
+			bat_status=''
+		elif [ $batp -le 60 ] ; then
+			bat_status=''
+		elif [ $batp -le 80 ] ; then
+			bat_status=''
+		else
+			bat_status=''
+		fi
+	fi
+	bat_status="$bat_status $batp%"
+fi
+
+
+
+notes=`cat ~/.todo 2>/dev/null | wc -l`
+
+xsetroot -name "| $vols $volp% |  $cpu% |  $(free -h | awk '/^Mem:/ {print $3}') |$([[ $wireless != '' ]] && echo '  |') $bat_status | $(date +' [%u] %d.%m.%Y |  %T') |$([[ $notes != 0 ]] && echo \ \*$notes\*\ \|)"
