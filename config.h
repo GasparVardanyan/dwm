@@ -39,6 +39,26 @@ static const char *tags[] = {
 static const unsigned tags_in_bar = 9 < LENGTH (tags) ? 9 : LENGTH (tags);
 static const unsigned display_tags = ~((1 << tags_in_bar) - 1);
 
+/* tagged scratchpad windows */
+static void makescratchtagwin ();
+# define SCRATCHTAGWIN(name, id)							\
+static const char * name [] = { # id,						\
+	"tabbed",												\
+		"-p", "s+1",										\
+		"-n", # name,										\
+		"-g", "1195x672",									\
+		"-c", "st", "-f", "monospace:size=16", "-w",		\
+	NULL													\
+}															\
+// SCRATCHTAGWIN
+# define SCRATCHTAGWIN_RULE(name, id)															\
+	{ NULL,       name,   NULL,       0,            1,           1,           -1,      id }		\
+// SCRATCHTAGWIN_RULE
+# define SCRATCHTAGWIN_KEY(name, id)														\
+	{ MODKEY|AltMask,          XK_ ## id,       togglescratch,  {.v = name } },				\
+	{ MODKEY|AltMask|ShiftMask,XK_ ## id,       makescratchtagwin,    {.i = '0' + id } },		\
+// SCRATCHTAGWIN_KEY
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -50,6 +70,15 @@ static const Rule rules[] = {
 ///	{ NULL,       NULL,   "scratchpad",   0,            0,             1,           -1,       's' },
 	/* class      instance        title       tags mask     iscentered   isfloating   monitor    scratch key */
 	{ NULL,       "scratchterm",   NULL,       0,            1,           1,           -1,      's' },
+	SCRATCHTAGWIN_RULE ("scratchtagwin1", '1'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin2", '2'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin3", '3'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin4", '4'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin5", '5'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin6", '6'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin7", '7'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin8", '8'),
+	SCRATCHTAGWIN_RULE ("scratchtagwin9", '9'),
 	{ NULL,        "scratchqb",    NULL,       0,            1,           1,           -1,      'q' },
 	{ NULL,      "scratch_tmpqb",  NULL,       0,            1,           1,           -1,      't' },
 	{ NULL,       "scratchcmus",   NULL,       0,            1,           1,           -1,      'c' },
@@ -73,6 +102,7 @@ static const Layout layouts[] = {
 /* key definitions */
 ///	#define MODKEY Mod1Mask
 #define MODKEY Mod4Mask
+#define AltMask Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -94,19 +124,28 @@ static const char *termcmd[]  = { "tabbed", "-p", "s+1", "-c", "st", "-w", NULL 
 /*First arg only serves to match against key in rules*/
 ///	static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL};
 static const char * scratchterm [] = { "s",
-	"tabbed",
-		"-p", "s+1",
-		"-n", "scratchterm",
-		"-g", "1195x672",
-		"-c", "st", "-f", "monospace:size=16", "-w",
-	// "st",
-	//     "-n", "scratchterm",
-	//     "-g", "90x25",
-	//     "-f", "monospace:size=16",
-	//     "-e", "sh",
-	//         "-c", "tmux", "new", "-s", "scratchterm",
-	NULL
+       "tabbed",
+               "-p", "s+1",
+               "-n", "scratchterm",
+               "-g", "1195x672",
+               "-c", "st", "-f", "monospace:size=16", "-w",
+       // "st",
+       //     "-n", "scratchterm",
+       //     "-g", "90x25",
+       //     "-f", "monospace:size=16",
+       //     "-e", "sh",
+       //         "-c", "tmux", "new", "-s", "scratchterm",
+       NULL
 };
+SCRATCHTAGWIN (scratchtagwin1, 1);
+SCRATCHTAGWIN (scratchtagwin2, 2);
+SCRATCHTAGWIN (scratchtagwin3, 3);
+SCRATCHTAGWIN (scratchtagwin4, 4);
+SCRATCHTAGWIN (scratchtagwin5, 5);
+SCRATCHTAGWIN (scratchtagwin6, 6);
+SCRATCHTAGWIN (scratchtagwin7, 7);
+SCRATCHTAGWIN (scratchtagwin8, 8);
+SCRATCHTAGWIN (scratchtagwin9, 9);
 static const char * scratchqb [] = { "q",
 	"qutebrowser", "--qt-arg", "name", "scratchqb", "-B", ".local/share/scratchqb",
 	NULL
@@ -172,6 +211,16 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,            XK_b,       togglescratch,  {.v = scratchqb } },
 	{ MODKEY|ShiftMask,            XK_t,       togglescratch,  {.v = scratchtmpqb } },
 	{ MODKEY|ShiftMask,            XK_c,       togglescratch,  {.v = scratchcmus } },
+	SCRATCHTAGWIN_KEY (scratchtagwin1, 1)
+	SCRATCHTAGWIN_KEY (scratchtagwin2, 2)
+	SCRATCHTAGWIN_KEY (scratchtagwin3, 3)
+	SCRATCHTAGWIN_KEY (scratchtagwin4, 4)
+	SCRATCHTAGWIN_KEY (scratchtagwin5, 5)
+	SCRATCHTAGWIN_KEY (scratchtagwin6, 6)
+	SCRATCHTAGWIN_KEY (scratchtagwin7, 7)
+	SCRATCHTAGWIN_KEY (scratchtagwin8, 8)
+	SCRATCHTAGWIN_KEY (scratchtagwin9, 9)
+	{ MODKEY|AltMask|ShiftMask,    XK_0,       makescratchtagwin,    {.i = 0} },
 	{ MODKEY,                      XK_b,       togglebar,      {0} },
 	{ Mod1Mask,                    XK_Tab,     view,           {0} },
 	{ MODKEY,                      XK_Tab,     focusstack,     {.i = +1 } },
@@ -325,4 +374,19 @@ close_streams:
 # undef S_SHUTDOWN_ICON
 # undef S_FORMAT
 # undef S_FORMAT_CLEAR
+}
+
+static void makescratchtagwin (const Arg * arg)
+{
+	if (selmon -> sel)
+	{
+		selmon -> sel -> scratchkey = arg -> i;
+		if (arg -> i != 0)
+			selmon -> sel -> tags = 0,
+			selmon -> sel -> isfloating = 1;
+		else
+			selmon -> sel -> tags = selmon->tagset[selmon->seltags];
+		focus (selmon -> sel);
+		arrange (selmon);
+	}
 }
