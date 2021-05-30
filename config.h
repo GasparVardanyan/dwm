@@ -51,12 +51,12 @@ static const char * name [] = { # id,						\
 	NULL													\
 }															\
 // SCRATCHTAGWIN
-# define SCRATCHTAGWIN_RULE(name, id)															\
-	{ NULL,       name,   NULL,       0,            1,           1,           -1,      id }		\
+# define SCRATCHTAGWIN_RULE(name, id)																	\
+	{ NULL,       # name, NULL,       0,            1,           1,           -1,      '0' + id }		\
 // SCRATCHTAGWIN_RULE
 # define SCRATCHTAGWIN_KEY(name, id)														\
-	{ MODKEY|AltMask,          XK_ ## id,       togglescratch,  {.v = name } },				\
-	{ MODKEY|AltMask|ShiftMask,XK_ ## id,       makescratchtagwin,    {.i = '0' + id } },		\
+	{ MODKEY|AltMask,          XK_ ## id,      togglescratch,  {.v = name } },				\
+	{ MODKEY|AltMask|ShiftMask,XK_ ## id,      makescratchtagwin,{.i = '0' + id } },		\
 // SCRATCHTAGWIN_KEY
 
 static const Rule rules[] = {
@@ -70,15 +70,15 @@ static const Rule rules[] = {
 ///	{ NULL,       NULL,   "scratchpad",   0,            0,             1,           -1,       's' },
 	/* class      instance        title       tags mask     iscentered   isfloating   monitor    scratch key */
 	{ NULL,       "scratchterm",   NULL,       0,            1,           1,           -1,      's' },
-	SCRATCHTAGWIN_RULE ("scratchtagwin1", '1'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin2", '2'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin3", '3'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin4", '4'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin5", '5'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin6", '6'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin7", '7'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin8", '8'),
-	SCRATCHTAGWIN_RULE ("scratchtagwin9", '9'),
+	SCRATCHTAGWIN_RULE (scratchtagwin1, 1),
+	SCRATCHTAGWIN_RULE (scratchtagwin2, 2),
+	SCRATCHTAGWIN_RULE (scratchtagwin3, 3),
+	SCRATCHTAGWIN_RULE (scratchtagwin4, 4),
+	SCRATCHTAGWIN_RULE (scratchtagwin5, 5),
+	SCRATCHTAGWIN_RULE (scratchtagwin6, 6),
+	SCRATCHTAGWIN_RULE (scratchtagwin7, 7),
+	SCRATCHTAGWIN_RULE (scratchtagwin8, 8),
+	SCRATCHTAGWIN_RULE (scratchtagwin9, 9),
 	{ NULL,        "scratchqb",    NULL,       0,            1,           1,           -1,      'q' },
 	{ NULL,      "scratch_tmpqb",  NULL,       0,            1,           1,           -1,      't' },
 	{ NULL,       "scratchcmus",   NULL,       0,            1,           1,           -1,      'c' },
@@ -221,6 +221,7 @@ static Key keys[] = {
 	SCRATCHTAGWIN_KEY (scratchtagwin8, 8)
 	SCRATCHTAGWIN_KEY (scratchtagwin9, 9)
 	{ MODKEY|AltMask|ShiftMask,    XK_0,       makescratchtagwin,    {.i = 0} },
+	{ MODKEY|AltMask|ShiftMask,    XK_s,       makescratchtagwin,    {.i = 's'} },
 	{ MODKEY,                      XK_b,       togglebar,      {0} },
 	{ Mod1Mask,                    XK_Tab,     view,           {0} },
 	{ MODKEY,                      XK_Tab,     focusstack,     {.i = +1 } },
