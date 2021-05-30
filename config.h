@@ -19,6 +19,8 @@ static const char *fonts[]          = { "monospace:size=10" };
 ///	static const char col_gray3[]       = "#bbbbbb";
 ///	static const char col_gray4[]       = "#eeeeee";
 ///	static const char col_cyan[]        = "#005577";
+static const unsigned int baralpha = 0;
+static const unsigned int borderalpha = OPAQUE;
 ///	static const char *colors[][3]      = {
 ///		/*               fg         bg         border   */
 ///		[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -28,6 +30,11 @@ static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { "#bbbbbb", "#000000", "#444444" },
 	[SchemeSel]  = { "#000000", "#ff0000", "#ff0000" },
+};
+static const unsigned int alphas[][3]      = {
+	/*               fg      bg        border     */
+	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
