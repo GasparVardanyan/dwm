@@ -21,6 +21,8 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+#include "scratchtagwins.c"
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
@@ -30,6 +32,15 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        0  },
 	{ "firefox",  NULL,       NULL,       1 << 8,       0,           -1,        0  },
 	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },
+	SCRATCHTAGWIN_RULE (scratchtagwin1, 1),
+	SCRATCHTAGWIN_RULE (scratchtagwin2, 2),
+	SCRATCHTAGWIN_RULE (scratchtagwin3, 3),
+	SCRATCHTAGWIN_RULE (scratchtagwin4, 4),
+	SCRATCHTAGWIN_RULE (scratchtagwin5, 5),
+	SCRATCHTAGWIN_RULE (scratchtagwin6, 6),
+	SCRATCHTAGWIN_RULE (scratchtagwin7, 7),
+	SCRATCHTAGWIN_RULE (scratchtagwin8, 8),
+	SCRATCHTAGWIN_RULE (scratchtagwin9, 9),
 };
 
 /* layout(s) */
@@ -61,6 +72,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+SCRATCHTAGWIN (scratchtagwin1, 1);
+SCRATCHTAGWIN (scratchtagwin2, 2);
+SCRATCHTAGWIN (scratchtagwin3, 3);
+SCRATCHTAGWIN (scratchtagwin4, 4);
+SCRATCHTAGWIN (scratchtagwin5, 5);
+SCRATCHTAGWIN (scratchtagwin6, 6);
+SCRATCHTAGWIN (scratchtagwin7, 7);
+SCRATCHTAGWIN (scratchtagwin8, 8);
+SCRATCHTAGWIN (scratchtagwin9, 9);
+
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL};
 
@@ -69,6 +90,17 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
+	SCRATCHTAGWIN_KEY (scratchtagwin1, 1)
+	SCRATCHTAGWIN_KEY (scratchtagwin2, 2)
+	SCRATCHTAGWIN_KEY (scratchtagwin3, 3)
+	SCRATCHTAGWIN_KEY (scratchtagwin4, 4)
+	SCRATCHTAGWIN_KEY (scratchtagwin5, 5)
+	SCRATCHTAGWIN_KEY (scratchtagwin6, 6)
+	SCRATCHTAGWIN_KEY (scratchtagwin7, 7)
+	SCRATCHTAGWIN_KEY (scratchtagwin8, 8)
+	SCRATCHTAGWIN_KEY (scratchtagwin9, 9)
+	{ MODKEY|Mod1Mask|ShiftMask,     XK_0,  makescratchtagwin,  {.i = 0} },
+	{ MODKEY|Mod1Mask|ShiftMask,     XK_s,  makescratchtagwin,  {.i = 's'} },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
