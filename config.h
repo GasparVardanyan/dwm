@@ -94,7 +94,7 @@ SCRATCHTAGWIN ( scratchtagwin8, 8 );
 SCRATCHTAGWIN ( scratchtagwin9, 9 );
 
 #include "exitdwm.c"
-// #include "movestack.c"
+#include "movestack.c"
 #include "spawn_cmds.c"
 
 static Key keys[] = {
@@ -107,8 +107,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,         XK_Tab,    focusstack,        { .i = -1            } },
 	{ MODKEY,                   XK_j,      focusstack,        { .i = +1            } },
 	{ MODKEY,                   XK_k,      focusstack,        { .i = -1            } },
-	// { MODKEY|ShiftMask,         XK_j,      movestack,         { .i = +1            } },
-	// { MODKEY|ShiftMask,         XK_k,      movestack,         { .i = -1            } },
+	{ MODKEY|ShiftMask,         XK_j,      movestack,         { .i = +1            } },
+	{ MODKEY|ShiftMask,         XK_k,      movestack,         { .i = -1            } },
 	{ MODKEY|ShiftMask,         XK_h,      incnmaster,        { .i = +1            } },
 	{ MODKEY|ShiftMask,         XK_l,      incnmaster,        { .i = -1            } },
 	{ MODKEY,                   XK_h,      setmfact,          { .f = -.05f         } },
