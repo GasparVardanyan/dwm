@@ -1921,11 +1921,27 @@ togglescratch(const Arg *arg)
 	Client *c;
 	unsigned int found = 0;
 
-	for (c = selmon->clients; c && !(found = c->scratchkey == ((char**)arg->v)[0][0]); c = c->next);
+	Monitor *m;
+	for (m = mons; m && !found; m = m->next) {
+		for (c = m->clients; c && !(found = c->scratchkey == ((char**)arg->v)[0][0]); c = c->next);
+	}
+
 	if (found) {
-		c->tags = ISVISIBLE(c) ? 0 : selmon->tagset[selmon->seltags];
-		focus(NULL);
-		arrange(selmon);
+		if (c->mon != selmon) {
+			sendmon (c, selmon);
+			if (c->isfullscreen) {
+				c->isfullscreen = 0;
+				setfullscreen (c, 1);
+			} else if (c->isfloating) {
+				Arg arg = {.i = 0};
+				movecenter (& arg);
+			}
+		}
+		else {
+			c->tags = ISVISIBLE(c) ? 0 : selmon->tagset[selmon->seltags];
+			focus(NULL);
+			arrange(selmon);
+		}
 
 		if (ISVISIBLE(c)) {
 			focus(c);
