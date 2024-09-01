@@ -1,5 +1,6 @@
 |	TYPE	|	RESOURCE		|	DEFAULT VALUE		|	[ALTERNATIVE RESOURCE]	|
 |:---------:|:-----------------:|:---------------------:|:-------------------------:|
+|	B		|	barSingleBg		|	0					|							|
 |	U		|	borderpx		|	1					|							|
 |	U		|	snap			|	32					|							|
 |	I		|	showbar			|	1					|							|

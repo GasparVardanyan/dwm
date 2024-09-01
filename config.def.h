@@ -1,8 +1,16 @@
 /* See LICENSE file for copyright and license details. */
 
+# ifdef BARSINGLEBG
+# error (conflicting macro names)
+# endif // BARSINGLEBG
+
 /* theme management */
 # include "theme_beg.h" /* this is a compile-time generated header file */
 # include "theme.h"
+
+# if DWM_BARSINGLEBG == 1
+# define BARSINGLEBG
+# endif
 
 /* appearance */
 static const unsigned int borderpx  = DWM_BORDERPX;        /* border pixel of windows */
