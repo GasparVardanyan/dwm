@@ -746,7 +746,7 @@ drawbar(Monitor *m)
 			urg |= c->tags;
 	}
 	x = 0;
-	for (i = 0; i < LENGTH(tags); i++) {
+	for (i = 0; i < tags_in_bar; i++) {
 		w = bh;
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, bh, bh, 0, "", urg & 1 << i);
@@ -1801,8 +1801,8 @@ spawn(const Arg *arg)
 {
 	struct sigaction sa;
 
-	if (arg->v == dmenucmd)
-		dmenumon[0] = '0' + selmon->num;
+	/* if (arg->v == dmenucmd) */
+	/*     dmenumon[0] = '0' + selmon->num; */
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));

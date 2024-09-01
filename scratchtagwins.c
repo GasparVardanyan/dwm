@@ -9,17 +9,17 @@
 		"tabbed",												\
 			"-p", "s+1",										\
 			"-n", # name,										\
-			"-g", "1195x672",									\
+			"-g", "1212x680",									\
 			"-c", "st", "-w",									\
 		NULL													\
 	}															\
 
 # define SCRATCHTAGWIN_RULE(name, id)																	\
-	{ NULL,       # name, NULL,       0,            1,           -1,      '0' + id }		\
+	{ NULL,       # name, NULL,       0,            1,           1,           -1,      '0' + id }		\
 
 # define SCRATCHTAGWIN_KEY(name, id)														\
-	{ MODKEY|Mod1Mask,          XK_ ## id,      togglescratch,  {.v = name } },				\
-	{ MODKEY|Mod1Mask|ShiftMask,XK_ ## id,      makescratchtagwin,{.i = '0' + id } },		\
+	{ MODKEY|AltMask,          XK_ ## id,      togglescratch,  {.v = name } },				\
+	{ MODKEY|AltMask|ShiftMask,XK_ ## id,      makescratchtagwin,{.i = '0' + id } },		\
 
 static void makescratchtagwin (const Arg * arg)
 {
