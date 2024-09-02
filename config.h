@@ -164,6 +164,8 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_i,              BacklightUp          )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_o,              CmusStop             )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_i,              MpvPlay              )
+	SPAWN_KEY   ( 0,                              XK_Print,          FlameshotFull        )
+	SPAWN_KEY   ( ShiftMask,                      XK_Print,          FlameshotGui         )
 	SPAWN_KEY   ( MODKEY,                         XK_backslash,      PassFill             )
 	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_backslash,      PassFillConfirm      )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_backslash,      PassFillU            )

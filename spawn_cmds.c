@@ -12,6 +12,7 @@ struct {
 		Terminal,           Dmenu,
 		VolUp,              VolDown,               VolToggle,
 		CmusNext,           CmusPrev,              CmusToggle,         CmusStop,
+		FlameshotGui,       FlameshotFull,
 		MpvPlay,
 		BacklightUp,        BacklightDown,
 		/* ScreenshotScreen,   ScreenshotSelection,   ScreenshotWindow, */
@@ -74,6 +75,17 @@ struct {
 	.CmusStop = {
 		.args = (const char * []) {
 			"sh", "-c", "cmus-remote -s && dwmstatus", NULL
+		}
+	},
+
+	.FlameshotGui = {
+		.args = (const char * []) {
+			"flameshot", "gui", NULL
+		}
+	},
+	.FlameshotFull = {
+		.args = (const char * []) {
+			"sh", "-c", "mkdir -p $HOME/screenshots && flameshot full --path $HOME/screenshots", NULL
 		}
 	},
 
