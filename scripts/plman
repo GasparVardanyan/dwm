@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+
+archive_av()
+{
+	rg --files --no-ignore | rg '\.(mkv|mp4|opus)$' | sed 's/^/youtube /;s/\.[^.]\+$//'
+}
+archive_th()
+{
+	rg --files --no-ignore | rg '\.jpg$' | sed 's/^/youtube /;s/\.[^.]\+$//'
+}
+
+cmd_dv()
+{
+	DIR=$(dirname "$1")
+	M3U=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+	yt-dlp --add-metadata --embed-thumbnail --convert-thumbnails jpg --ppa 'ThumbnailsConvertor:-q:v 1' -f 'bestvideo+bestaudio/best' -o '%(id)s.%(ext)s' -a "$M3U" --download-archive <(archive_av)
+
+		mkdir -p .thumbnails
+
+		pushd .thumbnails > /dev/null
+
+			yt-dlp --skip-download --write-thumbnail --convert-thumbnails jpg --ppa "ThumbnailsConvertor:-q:v 1" -o '%(id)s' -a ../"$M3U" --download-archive <(archive_th)
+
+		popd > /dev/null
+
+	popd > /dev/null
+}
+
+cmd_dv_fhd()
+{
+	DIR=$(dirname "$1")
+	M3U=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+	yt-dlp --add-metadata --embed-thumbnail --convert-thumbnails jpg --ppa 'ThumbnailsConvertor:-q:v 1' -f 'bestvideo[width<=1920][height<=1080]+bestaudio/best' -o '%(id)s.%(ext)s' -a "$M3U" --download-archive <(archive_av)
+
+		mkdir -p .thumbnails
+
+		pushd .thumbnails > /dev/null
+
+			yt-dlp --skip-download --write-thumbnail --convert-thumbnails jpg --ppa "ThumbnailsConvertor:-q:v 1" -o '%(id)s' -a ../"$M3U" --download-archive <(archive_th)
+
+		popd > /dev/null
+
+	popd > /dev/null
+}
+
+cmd_da()
+{
+
+	DIR=$(dirname "$1")
+	M3U=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+		yt-dlp --add-metadata --embed-thumbnail --convert-thumbnails jpg --ppa 'ThumbnailsConvertor:-q:v 1' -f 'bestaudio/best' -x -o '%(id)s.%(ext)s' -a "$M3U" --download-archive <(archive_av)
+
+	popd > /dev/null
+}
+
+cmd_rtl()
+{
+	DIR=$(dirname "$1")
+	M3U=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+		IFS=''
+
+		cat -- "$M3U" | while read -r k
+		do
+			if [[ "$k" =~ ^#.*$ ]]
+			then
+				echo -E "$k"
+			else
+				k=$(echo "$k" | sed 's#https://youtube.com/watch?v=##')
+				f=$(rg --files --no-ignore --maxdepth=1 -L . | rg -- "$k")
+				if [[ $(echo "$f" | wc -l) != 1 ]]
+				then
+					echo error $k $(echo "$f" | wc -l)
+					# dunstify u2m3u "error preparing $M3U"
+					continue
+				fi
+				# echo -n "#EXTINF:,";
+				# mediainfo --Output='General;%Movie%' -- "$f"
+				echo "$f"
+			fi
+		done
+
+	popd > /dev/null
+}
+
+cmd_mi()
+{
+	DIR=$(dirname "$1")
+	M3U=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+		IFS=''
+
+		cat -- "$M3U" | while read -r f
+		do
+			if [[ "$f" =~ ^#.*$ ]]
+			then
+				echo -E "$f"
+			else
+				if [[ $(echo "$f" | wc -l) != 1 ]]
+				then
+					echo error $k $(echo "$f" | wc -l)
+					continue
+				fi
+				echo -n "#EXTINF:,";
+				mediainfo --Output='General;%Movie%' -- "$f"
+				echo "$f"
+			fi
+		done
+
+	popd > /dev/null
+}
+
+cmd_fp()
+{
+	DIR=$(dirname "$1")
+	LST=$(basename "$1")
+
+	pushd "$DIR" > /dev/null
+
+		cat -- "$LST" | sed "s#^\\./#$(pwd)/#"
+
+	popd > /dev/null
+}
+
+cmd_pl()
+{
+	embed=""
+	[ "$XEMBED" != '' ] && embed="--wid=$XEMBED"
+	mpv --hwdec=vaapi --profile=enc-f-webm --fullscreen --loop-playlist=inf --ytdl-format="bestvideo[width<=1920][height<=1080]+bestaudio/best" --volume=60 $embed "$1"
+}
+
+cmd_pls()
+{
+	embed=""
+	[ "$XEMBED" != '' ] && embed="--wid=$XEMBED"
+	mpv --hwdec=vaapi --profile=enc-f-webm --fullscreen --loop-playlist=inf --ytdl-format="bestvideo[width<=1920][height<=1080]+bestaudio/best" --volume=60 --shuffle $embed "$1"
+}
+
+fcheck()
+{
+	if [ ! -f "$1" ]
+	then
+		exit -1
+	fi
+}
+
+fcheck "$2"
+cmd_"$1" "$2"
+
+# if [[ dv == "$1" ]]
+# then
+#     fcheck "$2"
+#     cmd_dv "$2"
+# elif [[ da == "$1" ]]
+# then
+#     fcheck "$2"
+#     cmd_da "$2"
+# elif [[ rtl == "$1" ]]
+# then
+#     fcheck "$2"
+#     cmd_rtl "$2"
+# elif [[ fp == "$1" ]]
+# then
+#     fcheck "$2"
+#     cmd_fp "$2"
+# fi

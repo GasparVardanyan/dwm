@@ -1,0 +1,9 @@
+#!/bin/sh
+
+l=$(ls ~/.config/ytfzf/subscriptions-* | sed 's/^.*subscriptions-//' | dmenu -p 'list: ' -l 20)
+if [ "$l" != '' ]
+then
+	t=$(mktemp)
+	cp ~/.config/ytfzf/subscriptions-"$l" "$t"
+	YTFZF_SUBSCRIPTIONS_FILE="$t" ytfzf -cSI -r -l -m
+fi

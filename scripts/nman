@@ -1,0 +1,5 @@
+#!/bin/sh
+
+printf '\33]2;%s\007' "$(echo nman $@)"
+
+nvim -c "Man $(echo $@)" -c "only" -c "set ft=man"

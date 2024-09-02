@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+list=$(pass show L)
+
+a=$(echo "$list" | cut -f 1 | dmenu)
+b="$(echo "$list" | grep -P "^$a\t" -m 1 | tr -s '\t' | cut -f 2)"
+xdotool type --clearmodifiers "$b"
+echo $a

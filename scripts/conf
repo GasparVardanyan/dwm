@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+c="$(echo -e 'conf\ndmenu\ndunstrc\ndwm\npam\nprofile\nqutebrowser\nsettheme\nsfeedrc\nst\nsxhkdrc\nsxiv-keyhandler\ntabbed\ntheme\nthemes\ntmux\nvimrc\nwallpaper\nxinitrc\nxresources\nzshrc' | sort | dmenu -p configure: -i -l 10 "$@")"
+
+if [[ $c == conf ]] ; then
+	e="$EDITOR ~/.local/bin/conf"
+elif [[ $c == dmenu ]] ; then
+	e="(cd ~/.local/src/dmenu && $EDITOR config.h && make clean PREFIX=$HOME/.local install) ; read -n 1 -s"
+elif [[ $c == dunstrc ]] ; then
+	e="$EDITOR ~/.config/dunst/dunstrc"
+elif [[ $c == dwm ]] ; then
+	e="(cd ~/.local/src/dwm && $EDITOR config.h && make clean PREFIX=~/.local install) ; read -n 1 -s"
+elif [[ $c == kshrc ]] ; then
+	e="$EDITOR ~/.kshrc"
+elif [[ $c == pam ]] ; then
+	e="$EDITOR ~/.pam_environment"
+elif [[ $c == profile ]] ; then
+	e="$EDITOR ~/.profile"
+elif [[ $c == qutebrowser ]] ; then
+	e="(cd ~/.config/qutebrowser && $EDITOR config.py)"
+elif [[ $c == settheme ]] ; then
+	e="$EDITOR ~/.local/bin/settheme"
+elif [[ $c == sfeedrc ]] ; then
+	e="$EDITOR ~/.sfeed/sfeedrc"
+elif [[ $c == st ]] ; then
+	e="(cd .local/src/st && $EDITOR config.h && make clean PREFIX=~/.local TERMINFO=~/.terminfo install) ; read -n 1 -s"
+elif [[ $c == sxhkdrc ]] ; then
+	e="$EDITOR ~/.config/sxhkd/sxhkdrc"
+elif [[ $c == sxiv-keyhandler ]] ; then
+	e="$EDITOR ~/.config/sxiv/exec/key-handler"
+elif [[ $c == tabbed ]] ; then
+	e="(cd ~/.local/src/tabbed && $EDITOR config.h && make clean PREFIX=$HOME/.local install) ; read -n 1 -s"
+elif [[ $c == theme ]] ; then
+	settheme "$(ls ~/.local/share/themes | grep '\.xdefaults$' | sed 's/\.xdefaults$//' | dmenu -p theme: -i -l 10)"
+elif [[ $c == themes ]] ; then
+	e="(cd ~/.local/share/themes && $EDITOR .) ; read -n 1 -s"
+elif [[ $c == tmux ]] ; then
+	e="$EDITOR ~/.tmux.conf"
+elif [[ $c == urxvt ]] ; then
+	e="$EDITOR ~/.urxvt/config && xrdb ~/.Xresources ; read -n 1 -s"
+elif [[ $c == vimrc ]] ; then
+	e="$EDITOR ~/.vimrc"
+elif [[ $c == wallpaper ]] ; then
+	sxiv -r -N pop-up -btr -g 1212x680 ~/.local/share/{themes,wallpapers}; exit
+elif [[ $c == xinitrc ]] ; then
+	e="$EDITOR ~/.xinitrc"
+elif [[ $c == xresources ]] ; then
+	e="$EDITOR ~/.Xresources && xrdb ~/.Xresources ; read -n 1 -s"
+elif [[ $c == zshrc ]] ; then
+	e="$EDITOR ~/.zshrc"
+else
+	exit
+fi
+
+$TERMINAL -n pop-up -g 120x30 -e "$SHELL" -c "$e || read -n 1 -s"

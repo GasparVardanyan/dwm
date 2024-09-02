@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# This script is the SUDO_ASKPASS variable, meaning that it will be used as a
+# password prompt if needed.
+
+# https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/dmenupass
+# EDITED
+
+dmenu -fn IBMPlexMono-16 -P -p "$1" <&- && echo

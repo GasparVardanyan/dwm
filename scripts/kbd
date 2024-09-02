@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+layouts=( 'us' 'am(phonetic-alt)' 'keym' )
+
+mkdir -p ~/.local/tmp
+
+setlayout ()
+{
+	if [ -f ~/.local/tmp/kbd ]
+	then
+		if [ $(($(date +%s%3N) - $(date +%s%3N -r ~/.local/tmp/kbd))) -le 200 ]
+		then
+			exit
+		fi
+	fi
+
+	echo "$@" > ~/.local/tmp/kbd
+
+	if [ "$l" == keym ]
+	then
+		setxkbmap -layout us
+		(
+			# sleep .2 &&		\
+			keym &&			\
+			kbd toggle
+		) &
+	else
+		setxkbmap -layout "$@" &
+	fi
+}
+
+[ ! -f ~/.local/tmp/kbd ] && setlayout "${layouts[0]}"
+
+getlayout ()
+{
+	sed "s/([^)]*)//g" ~/.local/tmp/kbd
+}
+
+toggle ()
+{
+	current="$(cat ~/.local/tmp/kbd)"
+
+	found=0
+	for l in "${layouts[@]}" ${layouts[0]}
+	do
+		if [ "$l" = "$current" ]
+		then
+			found=1
+			continue
+		fi
+		if [ $found = 1 ]
+		then
+			setlayout "$l"
+			break
+		fi
+	done
+
+	dunstify																\
+		"Keyboard layout: $(getlayout | tr '[:lower:]' '[:upper:]')"		\
+		-r 1111 -t 3000														\
+	&
+}
+
+[[ $1 == get ]] && getlayout
+[[ $1 == toggle ]] && toggle

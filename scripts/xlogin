@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+u=$(xfill)
+[[ "$u" == '' ]] && exit
+p=$(pass show "$u")
+[[ "$p" == '' ]] && exit
+sleep 1
+xdotool key KP_Tab
+sleep .5
+xdotool type --clearmodifiers "$p"
+sleep .5
+xdotool key KP_Enter

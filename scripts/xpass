@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+passmenu --type
+
+[[ $1 == 'e' ]] && xdotool key KP_Enter

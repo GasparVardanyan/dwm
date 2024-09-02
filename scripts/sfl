@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+target=''
+cmd=''
+
+dbrowse()
+{
+	# https://raw.githubusercontent.com/clamiax/scripts/master/src/dbrowse
+	# EDITED
+
+	target="$1"
+	[ -z "$target" ] && target=$HOME
+	prompt="$2"
+
+	while true; do
+		p="$prompt"
+		[ -z "$p" ] && p="$target"
+		sel="$(ls -1 "$target" |grep -v '^\.$' | dmenu -p "$p" -l 25)"
+		ec=$?
+		[ "$ec" -ne 0 ] && exit $ec
+
+		if [[ "$sel" = *"///" ]]; then
+			fbrowse "$target"
+			exit 0
+		elif [[ "$sel" = *"//" ]]; then
+			echo "$(realpath "${target}/${sel:0:-2}")"
+			exit 0
+		elif [[ "$sel" = *"//"* ]]; then
+			run "${sel#*//}" "$(realpath "${target}/${sel%%//*}")"
+			exit -1
+		fi
+
+		c="$(echo "$sel" |cut -b1)"
+		if [ "$c" = "/" ]; then
+			newt="$sel"
+		else
+			newt="$(realpath "${target}/${sel}")"
+		fi
+
+		if [ -e "$newt" ]; then
+			target="$newt"
+			if [ ! -d "$target" ]; then
+				echo "$target"
+				exit 0
+			fi
+		fi
+	done
+}
+
+fbrowse()
+{
+	target="$1"
+	[ -z "$target" ] && target="$HOME/media"
+	prompt="$2"
+	[ -z "$prompt" ] && prompt="file:"
+
+	sel=$(fd '^.*$' "$target" -t f | dmenu -p "$prompt" -i -l 10)
+	if [[ "$sel" = "///" ]]
+	then
+		dbrowse $target
+	else
+		echo $sel
+	fi
+}
+
+run()
+{
+	c=$1
+	p=$2
+
+	if [ "$p" != "" ]
+	then
+		if [ "$c" = "" ]
+		then
+			c="$( (echo xdg-open ; (dmenu_path | sed '/^xdg-open$/d')) | dmenu -p command: )"
+		fi
+
+		if [ "$c" != "" ]
+		then
+			if [[ $c = *! ]]
+			then
+				$TERMINAL -n pop-up -g 120x30 -e $SHELL -c "${c:0:-1} \"$p\" ; read"
+			else
+				$c "$p"
+			fi
+		fi
+	fi
+}
+
+if [[ $1 = f ]]
+then
+	p="$(fbrowse $2 $3)"
+elif [[ $1 = d ]]
+then
+	p="$(dbrowse $2 $3)"
+	[ $? -ne 0 ] && exit 0
+else
+	exit -1
+fi
+
+run "" "$p"

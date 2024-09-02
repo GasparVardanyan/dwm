@@ -1,0 +1,28 @@
+#!/bin/sh
+
+alert(){
+	[ "$2" != 'wait' ] &&
+		while :; do mpv ~/.local/share/spt/notification.wav; done &
+	dunstify -b spt "$1"
+	[ "$2" != 'wait' ] &&
+		kill $!
+}
+
+while true
+do
+	seq 4 | while read -r n
+	do
+		alert "Time to start working!\n     ... $n / 4 ..."
+		sleep $(( 45 * 60 ))
+
+		alert "Time to start resting!\n     ... $n / 4 ..."
+		sleep $(( 15 * 60 ))
+	done
+
+	alert "Time to take some nap!"
+	sleep $(( 45 * 60 ))
+
+	alert "Wake up!"
+
+	alert "Time to prepare to work!" wait
+done

@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+volp="$(pamixer --get-volume)"
+cores="$(grep -c "^processor" /proc/cpuinfo)"
+#cores="$(sysctl -n hw.ncpu)" # BSD
+cpu="$(ps aux | awk 'BEGIN {sum=0} {sum+=$3}; END {print sum}')"
+cpu="$((${cpu/\.*} / ${cores:-1}))"
+[[ $(pamixer --get-mute) == true ]] && vols='M ' || vols=''
+wireless="$(grep '^\s*w' /proc/net/wireless)"
+
+
+
+:<<'comment'
+bat_status=""
+del_tmp=""
+for bat in  /sys/class/power_supply/BAT*
+do
+	bats="$(cat $bat/status)"
+	batp="$(cat $bat/capacity)"
+
+	if [ $bats == 'Fully' ] ; then
+		bats=''
+	else
+		if [ $bats == 'Charging' ] ; then
+		   bats=''
+		else
+			if [ $batp -le 20 ] ; then
+				bats=''
+			elif [ $batp -le 40 ] ; then
+				bats=''
+			elif [ $batp -le 60 ] ; then
+				bats=''
+			elif [ $batp -le 80 ] ; then
+				bats=''
+			else
+				bats=''
+			fi
+		fi
+		bats="$bats $batp%"
+	fi
+	bat_status+="$del_tmp$bats"
+	del_tmp=" "
+done
+comment
+
+
+
+batp="$(upower -i /org/freedesktop/UPower/devices/battery_BAT1 | sed '/ignored/d' | grep percentage | sed 's/[[:space:]]\+.*[[:space:]]\+//;s/%//')"
+bat_status="$(upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep state | sed 's/[[:space:]]\+.*[[:space:]]\+//')"
+
+if [[ $batp != '' ]] ; then
+	if [[ $bat_status == 'fully-charged' ]] ; then
+		bat_status=''
+	else
+		if [[ $bat_status == 'charging' ]] ; then
+		   bat_status=''
+		else
+			if [[ $batp -le 20 ]] ; then
+				bat_status=''
+			elif [[ $batp -le 40 ]] ; then
+				bat_status=''
+			elif [[ $batp -le 60 ]] ; then
+				bat_status=''
+			elif [[ $batp -le 80 ]] ; then
+				bat_status=''
+			else
+				bat_status=''
+			fi
+		fi
+		# bat_status="$bat_status $batp%"
+		bat_status="$bat_status $batp"
+	fi
+fi
+
+
+
+todos="$(cat ~/.todo 2>/dev/null | wc -l)"
+
+
+
+feeds=$(LC_ALL=C awk -F '\t' '
+# URL file: amount of fields is 1.
+NF == 1 {
+	u[$0] = 1; # lookup table of URLs.
+	next;
+}
+# feed file: check by URL or id.
+{
+	total++;
+	if (length($3)) {
+		if (u[$3])
+			read++;
+	} else if (length($6)) {
+		if (u[$6])
+			read++;
+	}
+}
+END {
+	print (total - read);
+}' ~/.sfeed/urls ~/.sfeed/feeds/*)
+
+cmus=$(cmus-remote --query 2>/dev/null | grep ^status -m 1 | cut -d ' ' -f 2)
+[[ $cmus == 'stopped' ]] && cmus=""
+[[ $cmus == 'playing' ]] && cmus=""
+[[ $cmus == 'paused' ]] && cmus=""
+
+
+
+s="|"
+[[ $cmus != '' ]] && s="$s $cmus |"
+# s="$s $vols $volp% |"
+s="$s $vols$volp |"
+# s="$s  $cpu% |"
+# s="$s  $(free -h | awk '/^Mem:/ {print $3}') |"
+s="$s $cpu%$(free -h | awk '/^Mem:/ {print $3}') |"
+[[ $wireless != '' ]] && s="$s  |"
+[[ $batp != '' ]] && s="$s $bat_status |"
+# s="$s $(date +' %m%d%u:%H%M') |"
+s="$s $(date +'%m%d')$(( 1 + $(date +'%w') ))$(date +':%H%M') |"
+
+if compgen -G "/tmp/*_MOUNTED" > /dev/null
+then
+	s="$s $(ls -1 /tmp/*_MOUNTED | \sed 's#^.*/##' | cut -c-1 | paste -s -d ',') |"
+fi
+
+# [[ $feeds != '' && $feeds != 0 ]] && s="$s  $feeds |"
+[[ $feeds != '' && $feeds != 0 ]] && s="$s $feeds |"
+# s="$s  $(kbd get) |"
+s="$s $(kbd get) |"
+[[ $todos != 0 ]] && s="$s T $todos |"
+
+xsetroot -name "$s"

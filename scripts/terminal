@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+
+WORK_MOUNTED=/tmp/WORK_MOUNTED
+BLACKARCH_MOUNTED=/tmp/BLACKARCH_MOUNTED
+ARCHDRIVE_MOUNTED=/tmp/ARCHDRIVE_MOUNTED
+
+login_work() {
+	if [ ! -f "$WORK_MOUNTED" ]
+	then
+		trap '_logout_work' exit
+
+		# mount -t proc /proc /work/proc/
+		# mount -t sysfs /sys /work/sys/
+		# if [ -z "$(ls -A /work/dev)" ]
+		# then
+		#     mount --rbind -r /dev /work/dev/
+		# fi
+        #
+		# cp /etc/resolv.conf /work/etc/resolv.conf
+
+		touch "$WORK_MOUNTED"
+	fi
+
+	_banner_work_login
+	# chroot /work su - improvis
+	arch-chroot /work su - improvis
+}
+
+_logout_work() {
+	# umount /work/proc/ && \
+	#     umount /work/sys/ && \
+			rm "$WORK_MOUNTED"
+}
+
+login_blackarch() {
+	if [ ! -f "$BLACKARCH_MOUNTED" ]
+	then
+		trap '_logout_blackarch' exit
+
+		# mount -t proc /proc /blackarch/proc/
+		# mount -t sysfs /sys /blackarch/sys/
+		# if [ -z "$(ls -A /blackarch/dev)" ]
+		# then
+		#     mount -r --rbind /dev /blackarch/dev/
+		# fi
+		# cp /etc/resolv.conf /blackarch/etc/resolv.conf
+
+		touch "$BLACKARCH_MOUNTED"
+	fi
+
+	_banner_blackarch_login
+	# chroot /blackarch su - blackarch
+	arch-chroot /blackarch su - blackarch
+	_banner_blackarch_logout
+}
+
+_logout_blackarch() {
+	# umount /blackarch/proc/ && \
+	#     umount /blackarch/sys/ && \
+			rm "$BLACKARCH_MOUNTED"
+}
+
+login_archdrive() {
+	if [ ! -f "$ARCHDRIVE_MOUNTED" ]
+	then
+		trap '_logout_archdrive' exit
+
+		mount -o subvol=/drive /dev/sda3 /home/archdrive/drive/
+
+		touch "$ARCHDRIVE_MOUNTED"
+	fi
+
+	su --whitelist-environment DISPLAY - archdrive -c ~archdrive/drive/bin/launcher
+}
+
+_logout_archdrive() {
+	umount /home/archdrive/drive/ && \
+		rm "$ARCHDRIVE_MOUNTED"
+}
+
+login() {
+	l=$(echo -e "archdrive\nblackarch\nwork" | sort | dmenu -p 'terminal: ' -l 20)
+	if [ "$l" != '' ]
+	then
+		case "$l" in
+			archdrive)
+				sudo terminal login_archdrive
+			;;
+			blackarch)
+				st_redish -n pop-up -g 120x30 -e sh -c 'sudo terminal login_blackarch'
+			;;
+			work)
+				st_leet -n pop-up -g 120x30 -e sh -c 'sudo terminal login_work'
+			;;
+			*)
+			;;
+		esac
+	fi
+}
+
+_banner_blackarch_login() {
+	clear
+	read -rd '' banner <<'EOF'
+\033[0;31m
+              ...
+             ;::::;
+           ;::::; :;
+         ;:::::'   :;
+        ;:::::;     ;.
+       ,:::::'       ;           OOO\
+       ::::::;       ;          OOOOO\
+       ;:::::;       ;         OOOOOOOO
+      ,;::::::;     ;'         / OOOOOOO
+    ;:::::::::`. ,,,;.        /  / DOOOOOO
+  .';:::::::::::::::::;,     /  /     DOOOO
+ ,::::::;::::::;;;;::::;,   /  /        DOOO
+;`::::::`'::::::;;;::::: ,#/  /          DOOO
+:`:::::::`;::::::;;::: ;::#  /            DOOO
+::`:::::::`;:::::::: ;::::# /              DOO
+`:`:::::::`;:::::: ;::::::#/               DOO
+ :::`:::::::`;; ;:::::::::##                OO
+ ::::`:::::::`;::::::::;:::#                OO
+ `:::::`::::::::::::;'`:;::#                O
+  `:::::`::::::::;' /  / `:#
+   ::::::`:::::;'  /  /   `#
+\033[0m
+EOF
+	echo -e "$banner"
+}
+
+_banner_blackarch_logout() {
+	clear
+	echo -e "\033[5;31mYo n00b, b4ckd00r1ng y0ur sy5t3m n0w\033[0m"
+	sleep 1337
+}
+
+_banner_work_login() {
+	clear
+	read -rd '' banner <<'EOF'
+\033[0;31m
+      ____                                    github.com/GasparVardanyan
+     / ___| __ _ ___ _ __   __ _ _ __         gitlab.com/GasparVardanyan
+    | |  _ / _` / __| '_ \ / _` | '__|        @gaspar@թութ.հայ
+    | |_| | (_| \__ \ |_) | (_| | |           gaspar@jabber.am
+     \____|\__,_|___/ .__/ \__,_|_|           @gaspar_m:matrix.org
+                    |_|                       gaspar_pm@proton.me
+\033[0m
+EOF
+	echo -e "$banner"
+}
+
+$1

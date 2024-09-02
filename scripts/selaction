@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+cmd=''
+inp=''
+
+mkdir -p ~/.selaction.d
+
+logfile=/dev/null
+
+if [[ $2 = 'dmenu' ]]
+then
+	inp="$(echo -n | dmenu -p "$1":)"
+elif [[ $2 = 'selection' ]]
+then
+	inp="$(xsel -op)"
+fi
+
+# TODO: some code sections repeat... need to fix this
+
+if [[ $1 = 'translate' ]]
+then
+	echo "$inp" >> ~/.selaction
+	logfile=~/.selaction.d/"$inp".google-trans
+	if [ -f "$logfile" ]
+	then
+		cmd="cat \"$logfile\""
+	else
+		# cmd="trans :hy \"$inp\" 2>&1 | tee \"$logfile\""
+		cmd="(out=\$(trans :hy \"$inp\" 2>&1); s=\$?; echo \$out | tee \"$logfile\"; [ \$s -ne 0 ] && rm \"$logfile\")"
+	fi
+elif [[ $1 = 'urban' ]]
+then
+	echo "$inp" >> ~/.selaction
+	logfile=~/.selaction.d/"$inp".urban-dict
+	if [ -f "$logfile" ]
+	then
+		cmd="cat \"$logfile\""
+	else
+		# cmd="zdict --dict urban \"$inp\" | tee \"$logfile\""
+		cmd="(out=\$(zdict --dict urban \"$inp\" 2>&1); s=\$?; echo \$out | tee \"$logfile\"; [ \$s -ne 0 ] && rm \"$logfile\")"
+	fi
+elif [[ $1 = 'chtsh' ]]
+then
+	cmd="cht.sh \"$inp\""
+elif [[ $1 = 'tldr' ]]
+then
+	cmd="tldr \"$inp\""
+elif [[ $1 = 'wiki' ]]
+then
+	cmd="wiki-search-html \"$inp\""
+fi
+
+cmd="nvim +'term! $cmd'"
+
+[[ $cmd != '' && $inp != '' ]] &&
+	$TERMINAL -t "$1: $inp" -n pop-up -g 120x30 -e "$SHELL" -c "$cmd"

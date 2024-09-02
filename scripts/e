@@ -1,0 +1,125 @@
+#!/bin/sh
+
+_choose()
+{
+	if [[ $(echo "$@" | wc -l) -eq 1 ]]
+	then
+		echo $@
+	else
+		echo "$@" | dmenu -p choose: -l 5
+	fi
+}
+
+_lu()
+{
+	iface=$(_choose "$(ifconfig -a | grep '^enp' | sed '/^enp2s0:/d;s/:.*//')")
+
+	[ -z "$iface" ] && exit
+
+	sudo ifconfig $iface up
+	sudo dhclient $iface
+}
+
+_li()
+{
+	iface=$(_choose "$(ifconfig -a | grep '^enp' | sed '/^enp2s0:/d;s/:.*//')")
+
+	[ -z "$iface" ] && exit
+
+	sudo dhclient $iface
+}
+
+_ld()
+{
+	iface=$(_choose "$(ifconfig -a | grep '^enp' | sed '/^enp2s0:/d;s/:.*//')")
+
+	[ -z "$iface" ] && exit
+
+	sudo ifconfig $iface down
+}
+
+_wu()
+{
+	sudo rfkill unblock wlan
+	sudo ifconfig wlp3s0 up
+}
+
+_wi()
+{
+	sudo dhclient wlp3s0
+}
+
+_wc()
+{
+	sudo wpa_cli -i wlp3s0
+}
+
+_wsu()
+{
+	sudo systemctl start wpa_supplicant@wlp3s0.service
+	sudo systemctl start dhclient@wlp3s0.service
+}
+
+_wsd()
+{
+	sudo systemctl stop wpa_supplicant@wlp3s0.service
+	sudo systemctl stop dhclient@wlp3s0.service
+}
+
+_wd()
+{
+	sudo ifconfig wlp3s0 down
+	sudo rfkill block wlan
+}
+
+_wr()
+{
+	_wsd
+	_wd
+	_wu
+	_wsu
+	_wi
+}
+
+_du()
+{
+	mon=$(_choose "$(xrandr | grep '^\w' | sed '1d;/eDP1/d;/disconnected/d' | cut -d ' ' -f1)")
+
+	[ -z "$mon" ] && exit
+
+	lr=$(_choose "$(echo -e 'left\nright')")
+
+	xrandr --output $mon --off
+	xrandr --output $mon --mode 1920x1080 "--$lr-of" eDP1
+
+	~/.fehbg
+}
+
+_dd()
+{
+	mon=$(_choose "$(xrandr | grep '^\w' | sed '1d;/eDP1/d;/disconnected/d' | cut -d ' ' -f1)")
+
+	[ -z "$mon" ] && exit
+
+	xrandr --output $mon --off
+}
+
+_au()
+{
+	rm -rf ~/mnt
+	mkdir -p ~/mnt
+	_ad 2>/dev/null
+	simple-mtpfs --device 1 ~/mnt
+}
+
+_ad()
+{
+	fusermount -u ~/mnt
+}
+
+_il()
+{
+	ifconfig -a
+}
+
+_$1

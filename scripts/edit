@@ -1,0 +1,3 @@
+#!/bin/sh
+
+$TERMINAL -n pop-up -g 120x30 -e $SHELL -c "nvim \"$@\""

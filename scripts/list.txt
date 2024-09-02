@@ -1,0 +1,13 @@
+conf
+dwmstatus
+emo
+kbd
+manbrowse
+play
+selaction
+sfl
+terminal
+todo
+xfill
+xlogin
+xpass
