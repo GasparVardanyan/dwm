@@ -6,11 +6,13 @@
 
 # define SCRATCHTAGWIN(name, id)								\
 	static const char * name [] = { # id,						\
-		"tabbed",												\
-			"-p", "s+1",										\
+		"st",													\
 			"-n", # name,										\
-			"-g", "1212x680",									\
-			"-c", "st", "-w",									\
+			"-g", "120x30",										\
+			"-e",												\
+				/* "sh", "-c",										\ */ \
+				/* "tmux attach-session -t " #name " || tmux new-session -t " #name, \ */ \
+				"tmux",											\
 		NULL													\
 	}															\
 
