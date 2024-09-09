@@ -15,7 +15,6 @@ struct {
 		FlameshotGui,       FlameshotFull,
 		MpvPlay,
 		BacklightUp,        BacklightDown,
-		/* ScreenshotScreen,   ScreenshotSelection,   ScreenshotWindow, */
 		PassFill,           PassFillConfirm,       PassFillU,          PassFillUConfirm,
 		Task,               Todo,
 		FileLaunch,         FileLaunchFuzzy,       DmenuFM,
