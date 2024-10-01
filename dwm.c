@@ -861,6 +861,12 @@ enternotify(XEvent *e)
 	} else if (!c || c == selmon->sel)
 		return;
 	focus(c);
+
+	if (m->lt[m->sellt]->arrange == stairs) {
+		if (!m->sel || !m->sel->isfullscreen) {
+			restack(m);
+		}
+	}
 }
 
 void
@@ -2692,6 +2698,8 @@ focusmaster(const Arg *arg)
 
 	c = nexttiled(selmon->clients);
 
-	if (c)
+	if (c) {
 		focus(c);
+		restack(selmon);
+	}
 }
