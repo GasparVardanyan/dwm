@@ -26,7 +26,8 @@ struct {
 		WhiteScreen,        BlackScreen,
 		KbdSwitch,          EmojiCopy,             ClipMenu,           SelEdit,
 		ManBrowse,
-		DunstClose,         TerminalSession,       Browser,            SfeedCurses,        Lock,   ConfEdit;
+		DunstClose,         TerminalSession,       Browser,            SfeedCurses,        Lock,   ConfEdit,
+		NeoVim;
 } static const launchers = {
 
 	.Terminal = {
@@ -271,6 +272,12 @@ struct {
 	.ConfEdit = {
 		.args = (const char * []) {
 			"conf", NULL
+		}
+	},
+
+	.NeoVim = {
+		.args = (const char * []) {
+			"alacritty", "-T", "NeoVim", "-e", "nvim", NULL
 		}
 	},
 };
