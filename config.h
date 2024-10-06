@@ -64,6 +64,7 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
+#include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[S]",      stairs },  /* first entry is default */
@@ -73,6 +74,8 @@ static const Layout layouts[] = {
 	{ "[D]",      deck },
 	{ "|M|",      centeredmaster },
 	{ ">M>",      centeredfloatingmaster },
+	{ "[@]",      spiral },
+	{ "[\\]",     dwindle },
 };
 
 /* key definitions */
@@ -104,45 +107,48 @@ SCRATCHTAGWIN ( scratchtagwin9, 9 );
 #include "movestack.c"
 #include "spawn_cmds.c"
 
+
 static Key keys[] = {
-	/* modifier                 key        function           argument */
-	{ MODKEY|AltMask|ShiftMask, XK_0,      makescratchtagwin, { .i = 0             } },
-	{ MODKEY|AltMask|ShiftMask, XK_s,      makescratchtagwin, { .i = 's'           } },
-	{ MODKEY,                   XK_b,      togglebar,         { .i = 0             } },
-	{ Mod1Mask,                 XK_Tab,    view,              { .i = 0             } },
-	{ MODKEY,                   XK_Tab,    focusstack,        { .i = +1            } },
-	{ MODKEY|ShiftMask,         XK_Tab,    focusstack,        { .i = -1            } },
-	{ MODKEY,                   XK_j,      focusstack,        { .i = +1            } },
-	{ MODKEY,                   XK_k,      focusstack,        { .i = -1            } },
-	{ MODKEY|ShiftMask,         XK_j,      movestack,         { .i = +1            } },
-	{ MODKEY|ShiftMask,         XK_k,      movestack,         { .i = -1            } },
-	{ MODKEY|ShiftMask,         XK_h,      incnmaster,        { .i = +1            } },
-	{ MODKEY|ShiftMask,         XK_l,      incnmaster,        { .i = -1            } },
-	{ MODKEY,                   XK_h,      setmfact,          { .f = -.05f         } },
-	{ MODKEY,                   XK_l,      setmfact,          { .f = +.05f         } },
-	{ MODKEY|ShiftMask,         XK_Return, zoom,              { .i = 0             } },
-	{ MODKEY|ShiftMask,         XK_q,      killclient,        { .i = 0             } },
-	{ MODKEY|ShiftMask,         XK_f,      togglefullscr,     { .i = 0             } },
-	{ MODKEY|ControlMask,       XK_s,      setlayout,         { .v = &layouts[0]   } },
-	{ MODKEY,                   XK_t,      setlayout,         { .v = &layouts[1]   } },
-	{ MODKEY,                   XK_f,      setlayout,         { .v = &layouts[2]   } },
-	{ MODKEY,                   XK_m,      setlayout,         { .v = &layouts[3]   } },
-	{ MODKEY|ControlMask,       XK_d,      setlayout,         { .v = &layouts[4]   } },
-	{ MODKEY|ControlMask,       XK_a,      setlayout,         { .v = &layouts[5]   } },
-	{ MODKEY|ControlMask,       XK_f,      setlayout,         { .v = &layouts[6]   } },
-	{ MODKEY|ControlMask,       XK_space,  focusmaster,       { .i = 0             } },
-	{ MODKEY|ShiftMask,         XK_space,  togglefloating,    { .i = 0             } },
-	{ MODKEY,                   XK_comma,  focusmon,          { .i = +1            } },
-	{ MODKEY,                   XK_period, focusmon,          { .i = -1            } },
-	{ MODKEY|ShiftMask,         XK_comma,  tagmon,            { .i = +1            } },
-	{ MODKEY|ShiftMask,         XK_period, tagmon,            { .i = -1            } },
-	{ MODKEY|ShiftMask,         XK_x,      movecenter,        { .i = 0             } },
-	{ MODKEY,                   XK_0,      view,              { .ui = display_tags } },
-	{ MODKEY|ShiftMask,         XK_0,      tag,               { .ui = display_tags } },
-	{ MODKEY|ShiftMask,         XK_e,      exitdwm,           { .i = 0             } },
-	{ MODKEY,                   XK_minus,  scratchpad_show,   { .i = 0             } },
-	{ MODKEY|ShiftMask,         XK_minus,  scratchpad_hide,   { .i = 0             } },
-	{ MODKEY|ShiftMask,         XK_equal,  scratchpad_remove, { .i = 0             } },
+	/* modifier                               key            function               argument */
+	{ MODKEY|AltMask|ShiftMask,               XK_0,          makescratchtagwin,     { .i    = 0              } },
+	{ MODKEY|AltMask|ShiftMask,               XK_s,          makescratchtagwin,     { .i    = 's'            } },
+	{ MODKEY,                                 XK_b,          togglebar,             { .i    = 0              } },
+	{ Mod1Mask,                               XK_Tab,        view,                  { .i    = 0              } },
+	{ MODKEY,                                 XK_Tab,        focusstack,            { .i    = +1             } },
+	{ MODKEY|ShiftMask,                       XK_Tab,        focusstack,            { .i    = -1             } },
+	{ MODKEY,                                 XK_j,          focusstack,            { .i    = +1             } },
+	{ MODKEY,                                 XK_k,          focusstack,            { .i    = -1             } },
+	{ MODKEY|ShiftMask,                       XK_j,          movestack,             { .i    = +1             } },
+	{ MODKEY|ShiftMask,                       XK_k,          movestack,             { .i    = -1             } },
+	{ MODKEY|ShiftMask,                       XK_h,          incnmaster,            { .i    = +1             } },
+	{ MODKEY|ShiftMask,                       XK_l,          incnmaster,            { .i    = -1             } },
+	{ MODKEY,                                 XK_h,          setmfact,              { .f    = -.05f          } },
+	{ MODKEY,                                 XK_l,          setmfact,              { .f    = +.05f          } },
+	{ MODKEY|ShiftMask,                       XK_Return,     zoom,                  { .i    = 0              } },
+	{ MODKEY|ShiftMask,                       XK_q,          killclient,            { .i    = 0              } },
+	{ MODKEY|ShiftMask,                       XK_f,          togglefullscr,         { .i    = 0              } },
+	{ MODKEY|ControlMask,                     XK_s,          setlayout,             { .v    = &layouts[0]    } },
+	{ MODKEY,                                 XK_t,          setlayout,             { .v    = &layouts[1]    } },
+	{ MODKEY,                                 XK_f,          setlayout,             { .v    = &layouts[2]    } },
+	{ MODKEY,                                 XK_m,          setlayout,             { .v    = &layouts[3]    } },
+	{ MODKEY|ControlMask,                     XK_d,          setlayout,             { .v    = &layouts[4]    } },
+	{ MODKEY|ControlMask,                     XK_a,          setlayout,             { .v    = &layouts[5]    } },
+	{ MODKEY|ControlMask,                     XK_f,          setlayout,             { .v    = &layouts[6]    } },
+	{ MODKEY|ControlMask|ShiftMask,           XK_f,          setlayout,             { .v    = &layouts[7]    } },
+	{ MODKEY|ControlMask|ShiftMask,           XK_a,          setlayout,             { .v    = &layouts[8]    } },
+	{ MODKEY|ControlMask,                     XK_space,      focusmaster,           { .i    = 0              } },
+	{ MODKEY|ShiftMask,                       XK_space,      togglefloating,        { .i    = 0              } },
+	{ MODKEY,                                 XK_comma,      focusmon,              { .i    = +1             } },
+	{ MODKEY,                                 XK_period,     focusmon,              { .i    = -1             } },
+	{ MODKEY|ShiftMask,                       XK_comma,      tagmon,                { .i    = +1             } },
+	{ MODKEY|ShiftMask,                       XK_period,     tagmon,                { .i    = -1             } },
+	{ MODKEY|ShiftMask,                       XK_x,          movecenter,            { .i    = 0              } },
+	{ MODKEY,                                 XK_0,          view,                  { .ui   = display_tags   } },
+	{ MODKEY|ShiftMask,                       XK_0,          tag,                   { .ui   = display_tags   } },
+	{ MODKEY|ShiftMask,                       XK_e,          exitdwm,               { .i    = 0              } },
+	{ MODKEY,                                 XK_minus,      scratchpad_show,       { .i    = 0              } },
+	{ MODKEY|ShiftMask,                       XK_minus,      scratchpad_hide,       { .i    = 0              } },
+	{ MODKEY|ShiftMask,                       XK_equal,      scratchpad_remove,     { .i    = 0              } },
 
 # if defined NSK || defined SWK
 # error conflicting macro names
