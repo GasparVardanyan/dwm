@@ -277,7 +277,7 @@ struct {
 
 	.NeoVim = {
 		.args = (const char * []) {
-			"alacritty", "-T", "NeoVim", "-e", "sh", "-c", "NVIM_APPNAME=nvim-ide nvim", NULL
+			"alacritty", "-T", "NeoVim IDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim-ide nvim", NULL
 		}
 	},
 };
