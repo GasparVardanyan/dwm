@@ -18,18 +18,18 @@ struct {
 
 	.term = { .instance = "scratchterm", .key = 's',
 		.args = (const char * []) { "s",
-			/* "tabbed", */
-			/*     "-p", "s+1", */
-			/*     "-n", "scratchterm", */
-			/*     "-g", "1212x680", */
-			/*     "-c", "st", "-w", */
-			"st",
+			"tabbed",
+				"-p", "s+1",
 				"-n", "scratchterm",
-				"-g", "120x30",
-				"-e",
-					/* "sh", "-c", */
-					/* "tmux attach-session -t scratchterm || tmux new-session -t scratchterm", */
-					"tmux",
+				"-g", "1212x680",
+				"-c", "st", "-w",
+			/* "st", */
+			/*     "-n", "scratchterm", */
+			/*     "-g", "120x30", */
+			/*     "-e", */
+			/*         [> "sh", "-c", <] */
+			/*         [> "tmux attach-session -t scratchterm || tmux new-session -t scratchterm", <] */
+			/*         "tmux", */
 			NULL
 		}
 	},

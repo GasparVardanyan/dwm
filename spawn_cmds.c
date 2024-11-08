@@ -32,8 +32,8 @@ struct {
 
 	.Terminal = {
 		.args = (const char * []) {
-			/* "tabbed", "-p", "s+1", "-c", "st", "-w", NULL */
-			"st", "-e", "tmux", NULL
+			"tabbed", "-p", "s+1", "-c", "st", "-w", NULL
+			/* "st", "-e", "tmux", NULL */
 		}
 	},
 	.Dmenu = {
