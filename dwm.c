@@ -937,8 +937,8 @@ focusmon(const Arg *arg)
 	unfocus(selmon->sel, 0);
 
 	Client * c = m->sel;
-	if (NULL != c) {
-		XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, c->x + WIDTH(c) / 2 - m->mx, c->y + HEIGHT(c) / 2 - m->my);
+	if (NULL != c && 0 == c->isfullscreen) {
+		XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, c->x + c->w + c->bw - m->mx, c->y + c->h + c->bw - m->my);
 	}
 	else {
 		XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 2);
