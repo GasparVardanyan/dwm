@@ -127,7 +127,7 @@ static Key keys[] = {
 	{ MODKEY,                                 XK_h,          setmfact,              { .f    = -.05f          } },
 	{ MODKEY,                                 XK_l,          setmfact,              { .f    = +.05f          } },
 	{ MODKEY|ShiftMask,                       XK_Return,     zoom,                  { .i    = 0              } },
-	{ MODKEY|ControlMask|ShiftMask,           XK_q,          killclient,            { .i    = 0              } },
+	{ MODKEY|ControlMask,                     XK_q,          killclient,            { .i    = 0              } },
 	{ MODKEY|ShiftMask,                       XK_f,          togglefullscr,         { .i    = 0              } },
 	{ MODKEY|ControlMask,                     XK_s,          setlayout,             { .v    = &layouts[0]    } },
 	{ MODKEY,                                 XK_t,          setlayout,             { .v    = &layouts[1]    } },
@@ -212,6 +212,7 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY,                         XK_a,              WhiteScreen          )
 	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_a,              BlackScreen          )
 	SPAWN_KEY   ( MODKEY,                         XK_space,          KbdSwitch            )
+	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_m,              Keym                 )
 	SPAWN_KEY   ( MODKEY,                         XK_e,              EmojiCopy            )
 	SPAWN_KEY   ( MODKEY,                         XK_c,              ClipMenu             )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_e,              SelEdit              )

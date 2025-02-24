@@ -24,7 +24,7 @@ struct {
 		TranslateDmenu,     TranslateSelection,
 		ZdictDmenu,         ZdictSelection,
 		WhiteScreen,        BlackScreen,
-		KbdSwitch,          EmojiCopy,             ClipMenu,           SelEdit,
+		KbdSwitch,          Keym,                  EmojiCopy,          ClipMenu,           SelEdit,
 		ManBrowse,
 		DunstClose,         TerminalSession,       Browser,            SfeedCurses,        Lock,   ConfEdit,
 		NeoVim;
@@ -222,6 +222,11 @@ struct {
 			"sh", "-c", "kbd toggle && dwmstatus", NULL
 		}
 	},
+	.Keym = {
+		.args = (const char * []) {
+			"sh", "-c", "setxkbmap -layout us; echo us > ~/.local/tmp/kbd; dunstify 'Keyboard layout: keym' -r 1111 -t 3000; keym; dunstify 'Keyboard layoyt: us' -r 1111 -t 3000", NULL
+		}
+	},
 	.EmojiCopy = {
 		.args = (const char * []) {
 			"emo", NULL
@@ -277,7 +282,7 @@ struct {
 
 	.NeoVim = {
 		.args = (const char * []) {
-			"alacritty", "-T", "NeoVim IDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim-ide nvim", NULL
+			"alacritty", "-T", "NeoVim PDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim-ide nvim", NULL
 		}
 	},
 };

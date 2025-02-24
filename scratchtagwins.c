@@ -6,7 +6,7 @@
 
 # define SCRATCHTAGWIN(name, id)								\
 	static const char * name [] = { # id,						\
-			"tabbed",												\
+			"tabbed",											\
 			"-p", "s+1",										\
 			"-n", # name,										\
 			"-g", "1212x680",									\
