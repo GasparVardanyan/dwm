@@ -32,8 +32,7 @@ struct {
 
 	.Terminal = {
 		.args = (const char * []) {
-			"tabbed", "-p", "s+1", "-c", "st", "-w", NULL
-			/* "st", "-e", "tmux", NULL */
+			"tabbed", "-p", "s+1", "-c", "alacritty", "--embed", NULL
 		}
 	},
 	.Dmenu = {
@@ -282,7 +281,7 @@ struct {
 
 	.NeoVim = {
 		.args = (const char * []) {
-			"alacritty", "-T", "NeoVim PDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim-ide nvim", NULL
+			"alacritty", "-T", "NeoVim PDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim nvim", NULL
 		}
 	},
 };

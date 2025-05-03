@@ -10,14 +10,7 @@
 			"-p", "s+1",										\
 			"-n", # name,										\
 			"-g", "1212x680",									\
-			"-c", "st", "-w",									\
-		/* "st",													\ */\
-		/*     "-n", # name,										\ */\
-		/*     "-g", "120x30",										\ */\
-		/*     "-e",												\ */\
-		/*         [> "sh", "-c",										\ <] \ */\
-		/*         [> "tmux attach-session -t " #name " || tmux new-session -t " #name, \ <] \ */\
-		/*         "tmux",											\ */\
+			"-c", "alacritty", "--embed",						\
 		NULL													\
 	}															\
 
