@@ -3,7 +3,7 @@
 # define DWM_SNAP 32
 # define DWM_SHOWBAR 1
 # define DWM_TOPBAR 1
-# define DWM_FONT {"BlexMono Nerd Font"}
+# define DWM_FONT {"Iosevka Nerd Font"}
 # define DWM_FOREGROUND "#839496"
 # define DWM_BACKGROUND "#002b36"
 # define DWM_BORDER "#073642"
