@@ -222,7 +222,8 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_b,              Browser              )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_n,              SfeedCurses          )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_l,              Lock                 )
-	SPAWN_KEY   ( MODKEY,                         XK_p,              ConfEdit             )
+	SPAWN_KEY   ( MODKEY,                         XK_y,              BacklightDown        )
+	SPAWN_KEY   ( MODKEY,                         XK_p,              BacklightUp          )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_n,              NeoVim               )
 
 	TAGKEYS ( XK_F1,  9  )     TAGKEYS ( XK_1, 0 )
