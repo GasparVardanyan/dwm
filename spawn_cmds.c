@@ -14,9 +14,12 @@ struct {
 		CmusNext,           CmusPrev,              CmusToggle,         CmusStop,
 		FlameshotGui,       FlameshotFull,
 		MpvPlay,
-		BacklightUp,        BacklightDown,
+		BacklightUp,        BacklightDown,         BacklightMax,       BacklightMid,
+		KbdBrightOn,        KbdBrightOff,
+		ScreenRefresh240,   ScreenRefresh60,
 		PassFill,           PassFillConfirm,       PassFillU,          PassFillUConfirm,
 		Task,               Todo,
+		AWCC,
 		FileLaunch,         FileLaunchFuzzy,       DmenuFM,
 		ArchWikiDmenu,      ArchWikiSelection,
 		ChtShDmenu,         ChtShSelection,
@@ -97,12 +100,50 @@ struct {
 
 	.BacklightDown = {
 		.args = (const char * []) {
-			"brightnessctl", "s", "10%-", NULL
+			"brightnessctl", "-q", "s", "10%-", NULL
 		}
 	},
 	.BacklightUp = {
 		.args = (const char * []) {
-			"brightnessctl", "s", "10%+", NULL
+			"brightnessctl", "-q", "s", "10%+", NULL
+		}
+	},
+	.BacklightMax = {
+		.args = (const char * []) {
+			"brightnessctl", "-q", "s", "100%", NULL
+		}
+	},
+	.BacklightMid = {
+		.args = (const char * []) {
+			"brightnessctl", "-q", "s", "50%", NULL
+		}
+	},
+
+	.KbdBrightOn = {
+		.args = (const char * []) {
+			"awcc", "brightness", "0", NULL
+		}
+	},
+	.KbdBrightOff = {
+		.args = (const char * []) {
+			"awcc", "brightness", "100", NULL
+		}
+	},
+
+	.ScreenRefresh60 = {
+		.args = (const char * []) {
+			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "60", NULL
+		}
+	},
+	.ScreenRefresh240 = {
+		.args = (const char * []) {
+			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "240", NULL
+		}
+	},
+
+	.AWCC = {
+		.args = (const char * []) {
+			"awcc_dmenu", NULL
 		}
 	},
 

@@ -141,7 +141,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,                     XK_space,      focusmaster,           { .i    = 0              } },
 	{ MODKEY|ShiftMask,                       XK_space,      togglefloating,        { .i    = 0              } },
 	{ MODKEY|ControlMask|ShiftMask,           XK_space,      togglealwaysontop,     { .i    = 0              } },
-	{ MODKEY|ControlMask,                     XK_p,          togglesticky,          { .i    = 0              } },
+	// { MODKEY|ControlMask,                     XK_p,          togglesticky,          { .i    = 0              } }, // TODO: remap
 	{ MODKEY,                                 XK_comma,      focusmon,              { .i    = +1             } },
 	{ MODKEY,                                 XK_period,     focusmon,              { .i    = -1             } },
 	{ MODKEY|ShiftMask,                       XK_comma,      tagmon,                { .i    = +1             } },
@@ -167,8 +167,8 @@ static Key keys[] = {
 	NSK ( MODKEY|ShiftMask,             XK_t, qbt     )    SWK ( scratchtagwin6, 6 )
 	NSK ( MODKEY,                       XK_q, qalc    )    SWK ( scratchtagwin7, 7 )
 	NSK ( MODKEY|ShiftMask,             XK_c, cmus    )    SWK ( scratchtagwin8, 8 )
-	NSK ( MODKEY|ShiftMask,             XK_p, jb      )    SWK ( scratchtagwin9, 9 )
-	NSK ( MODKEY,                       XK_s, systray )
+	NSK ( MODKEY,                       XK_s, systray )    SWK ( scratchtagwin9, 9 )
+	// NSK ( MODKEY|ShiftMask,             XK_p, jb      )
 	NSK ( MODKEY|ControlMask|ShiftMask, XK_o, cmus    )
 	NSK ( MODKEY|ControlMask|ShiftMask, XK_u, volctl  )
 # undef NSK
@@ -224,6 +224,13 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_l,              Lock                 )
 	SPAWN_KEY   ( MODKEY,                         XK_y,              BacklightDown        )
 	SPAWN_KEY   ( MODKEY,                         XK_p,              BacklightUp          )
+	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_y,              BacklightMid         )
+	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_p,              BacklightMax         )
+	SPAWN_KEY   ( MODKEY|ControlMask,             XK_y,              KbdBrightOff         )
+	SPAWN_KEY   ( MODKEY|ControlMask,             XK_p,              KbdBrightOn          )
+	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_y,              ScreenRefresh60      )
+	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_p,              ScreenRefresh240     )
+	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_m,              AWCC                 )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_n,              NeoVim               )
 
 	TAGKEYS ( XK_F1,  9  )     TAGKEYS ( XK_1, 0 )
