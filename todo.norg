@@ -1,0 +1,5 @@
+* DWM
+
+  ~ ( ) replace st with alacritty, make a generic terminal launcher
+  ~ ( ) migrate needed changes to patched/master
+  ~ ( ) move spawn_cmds' command to a bash script
