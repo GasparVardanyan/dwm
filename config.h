@@ -141,7 +141,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,                     XK_space,      focusmaster,           { .i    = 0              } },
 	{ MODKEY|ShiftMask,                       XK_space,      togglefloating,        { .i    = 0              } },
 	{ MODKEY|ControlMask|ShiftMask,           XK_space,      togglealwaysontop,     { .i    = 0              } },
-	// { MODKEY|ControlMask,                     XK_p,          togglesticky,          { .i    = 0              } }, // TODO: remap
+	{ MODKEY|AltMask,                         XK_s,          togglesticky,          { .i    = 0              } },
 	{ MODKEY,                                 XK_comma,      focusmon,              { .i    = +1             } },
 	{ MODKEY,                                 XK_period,     focusmon,              { .i    = -1             } },
 	{ MODKEY|ShiftMask,                       XK_comma,      tagmon,                { .i    = +1             } },
@@ -188,6 +188,8 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_i,              FlameshotGui         )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_o,              CmusStop             )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_i,              MpvPlay              )
+	SPAWN_KEY   ( MODKEY|AltMask,                 XK_u,              MusSelect            )
+	SPAWN_KEY   ( MODKEY|AltMask,                 XK_i,              YtMpv                )
 	SPAWN_KEY   ( 0,                              XK_Print,          FlameshotFull        )
 	SPAWN_KEY   ( ShiftMask,                      XK_Print,          FlameshotGui         )
 	SPAWN_KEY   ( MODKEY,                         XK_backslash,      PassFill             )

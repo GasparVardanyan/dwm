@@ -9,28 +9,29 @@ struct {
 	struct {
 		const char ** args;
 	}
-		Terminal,           Dmenu,
-		VolUp,              VolDown,               VolToggle,
-		CmusNext,           CmusPrev,              CmusToggle,         CmusStop,
-		FlameshotGui,       FlameshotFull,
-		MpvPlay,
-		BacklightUp,        BacklightDown,         BacklightMax,       BacklightMid,
-		KbdBrightOn,        KbdBrightOff,
-		ScreenRefresh240,   ScreenRefresh60,
-		PassFill,           PassFillConfirm,       PassFillU,          PassFillUConfirm,
-		Task,               Todo,
-		AWCC,
-		FileLaunch,         FileLaunchFuzzy,       DmenuFM,
-		ArchWikiDmenu,      ArchWikiSelection,
-		ChtShDmenu,         ChtShSelection,
-		TldrDmenu,          TldrSelection,
-		TranslateDmenu,     TranslateSelection,
-		ZdictDmenu,         ZdictSelection,
-		WhiteScreen,        BlackScreen,
-		KbdSwitch,          Keym,                  EmojiCopy,          ClipMenu,           SelEdit,
-		ManBrowse,
-		DunstClose,         TerminalSession,       Browser,            SfeedCurses,        Lock,   ConfEdit,
-		NeoVim;
+		  Terminal,             Dmenu,
+		  VolUp,                VolDown,                 VolToggle,
+		  CmusNext,             CmusPrev,                CmusToggle,           CmusStop,             MusSelect,
+		  FlameshotGui,         FlameshotFull,
+		  YtMpv,
+		  MpvPlay,
+		  BacklightUp,          BacklightDown,           BacklightMax,         BacklightMid,
+		  KbdBrightOn,          KbdBrightOff,
+		  ScreenRefresh240,     ScreenRefresh60,
+		  PassFill,             PassFillConfirm,         PassFillU,            PassFillUConfirm,
+		  Task,                 Todo,
+		  AWCC,
+		  FileLaunch,           FileLaunchFuzzy,         DmenuFM,
+		  ArchWikiDmenu,        ArchWikiSelection,
+		  ChtShDmenu,           ChtShSelection,
+		  TldrDmenu,            TldrSelection,
+		  TranslateDmenu,       TranslateSelection,
+		  ZdictDmenu,           ZdictSelection,
+		  WhiteScreen,          BlackScreen,
+		  KbdSwitch,            Keym,                    EmojiCopy,            ClipMenu,             SelEdit,
+		  ManBrowse,
+		  DunstClose,           TerminalSession,         Browser,              SfeedCurses,          Lock,       ConfEdit,
+		  NeoVim;
 } static const launchers = {
 
 	.Terminal = {
@@ -62,22 +63,27 @@ struct {
 
 	.CmusPrev = {
 		.args = (const char * []) {
-			"sh", "-c", "cmus-remote -r && dwmstatus", NULL
+			"sh", "-c", "plctrl prev && dwmstatus", NULL
 		}
 	},
 	.CmusNext = {
 		.args = (const char * []) {
-			"sh", "-c", "cmus-remote -n && dwmstatus", NULL
+			"sh", "-c", "plctrl next && dwmstatus", NULL
 		}
 	},
 	.CmusToggle = {
 		.args = (const char * []) {
-			"sh", "-c", "cmus-remote -u && dwmstatus", NULL
+			"sh", "-c", "plctrl toggle_play && dwmstatus", NULL
 		}
 	},
 	.CmusStop = {
 		.args = (const char * []) {
-			"sh", "-c", "cmus-remote -s && dwmstatus", NULL
+			"sh", "-c", "plctrl stop && dwmstatus", NULL
+		}
+	},
+	.MusSelect = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl select_source && dwmstatus", NULL
 		}
 	},
 
@@ -89,6 +95,12 @@ struct {
 	.FlameshotFull = {
 		.args = (const char * []) {
 			"sh", "-c", "mkdir -p $HOME/screenshots && flameshot full --path $HOME/screenshots", NULL
+		}
+	},
+
+	.YtMpv = {
+		.args = (const char * []) {
+			"sh", "-c", "ytmpv", NULL
 		}
 	},
 
