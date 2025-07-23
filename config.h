@@ -230,8 +230,8 @@ static Key keys[] = {
 	SPAWN_KEY   ( MODKEY|ShiftMask,               XK_p,              BacklightMax         )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_y,              KbdBrightOff         )
 	SPAWN_KEY   ( MODKEY|ControlMask,             XK_p,              KbdBrightOn          )
-	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_y,              ScreenRefresh60      )
-	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_p,              ScreenRefresh240     )
+	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_y,              Screen1920      )
+	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_p,              Screen2560     )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_m,              AWCC                 )
 	SPAWN_KEY   ( MODKEY|ControlMask|ShiftMask,   XK_n,              NeoVim               )
 

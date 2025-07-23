@@ -23,10 +23,10 @@
 
 ### Superset 3 - display/brightness
 
-| modifier            | y               | p                |
-|---------------------|-----------------|------------------|
-| Super               | BacklightDown   | BacklightUp      |
-| Super+Shift         | BacklightMid    | BacklightMax     |
-| Super+Control       | KbdBrightOff    | KbdBrightOn      |
-| Super+Control+Shift | ScreenRefresh60 | ScreenRefresh240 |
+| modifier            | y             | p            |
+|---------------------|---------------|--------------|
+| Super               | BacklightDown | BacklightUp  |
+| Super+Shift         | BacklightMid  | BacklightMax |
+| Super+Control       | KbdBrightOff  | KbdBrightOn  |
+| Super+Control+Shift | Screen1920    | Screen2560   |
 

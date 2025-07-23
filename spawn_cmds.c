@@ -17,7 +17,7 @@ struct {
 		  MpvPlay,
 		  BacklightUp,          BacklightDown,           BacklightMax,         BacklightMid,
 		  KbdBrightOn,          KbdBrightOff,
-		  ScreenRefresh240,     ScreenRefresh60,
+		  Screen2560,           Screen1920,
 		  PassFill,             PassFillConfirm,         PassFillU,            PassFillUConfirm,
 		  Task,                 Todo,
 		  AWCC,
@@ -142,14 +142,14 @@ struct {
 		}
 	},
 
-	.ScreenRefresh60 = {
+	.Screen1920 = {
 		.args = (const char * []) {
-			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "60", NULL
+			"xrandr", "--output", "eDP-1", "--mode", "1920x1200", "--rate", "60", NULL
 		}
 	},
-	.ScreenRefresh240 = {
+	.Screen2560 = {
 		.args = (const char * []) {
-			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "240", NULL
+			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "60", NULL
 		}
 	},
 
