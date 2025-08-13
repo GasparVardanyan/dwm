@@ -3,12 +3,12 @@
 ## Supersets
 ### Superset 1 - quick actions
 
-| modifier            | [                  | ]              |
-|---------------------|--------------------|----------------|
-| Super               | TranslateDmenu     | ZdictDmenu     |
-| Super+Shift         | ChtShDmenu         | TldrDmenu      |
-| Super+Control       | TranslateSelection | ZdictSelection |
-| Super+Control+Shift | ChtShSelection     | TldrSelection  |
+| modifier            | [                  | ]              | \                | ;               |
+|---------------------|--------------------|----------------|------------------|-----------------|
+| Super               | TranslateDmenu     | ZdictDmenu     | PassFill         | FileLaunch      |
+| Super+Shift         | ChtShDmenu         | TldrDmenu      | PassFillConfirm  | FileLaunchFuzzy |
+| Super+Control       | TranslateSelection | ZdictSelection | PassFillU        | DmenuFM         |
+| Super+Control+Shift | ChtShSelection     | TldrSelection  | PassFillUConfirm |                 |
 
 ### Superset 2 - multimedia
 
@@ -29,4 +29,5 @@
 | Super+Shift         | BacklightMid  | BacklightMax |
 | Super+Control       | KbdBrightOff  | KbdBrightOn  |
 | Super+Control+Shift | Screen1920    | Screen2560   |
+
 

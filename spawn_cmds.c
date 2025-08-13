@@ -127,7 +127,7 @@ struct {
 	},
 	.BacklightMid = {
 		.args = (const char * []) {
-			"brightnessctl", "-q", "s", "50%", NULL
+			"brightnessctl", "-q", "s", "20%", NULL
 		}
 	},
 
