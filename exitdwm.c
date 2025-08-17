@@ -11,11 +11,13 @@ void exitdwm ()
 	defined S_SUSPEND			|| \
 	defined S_REBOOT			|| \
 	defined S_SHUTDOWN			|| \
+	defined S_HIBERNATE			|| \
 	defined S_LOCK_ICON			|| \
 	defined S_RESTART_DWM_ICON	|| \
 	defined S_OFFSCREEN_ICON	|| \
 	defined S_EXIT_ICON			|| \
 	defined S_SUSPEND_ICON		|| \
+	defined S_HIBERNATE_ICON	|| \
 	defined S_REBOOT_ICON		|| \
 	defined S_SHUTDOWN_ICON		|| \
 	defined S_FORMAT			|| \
@@ -30,11 +32,13 @@ void exitdwm ()
 # define S_SUSPEND "sUspend"
 # define S_REBOOT "Reboot"
 # define S_SHUTDOWN "Shutdown"
-# define S_LOCK_ICON "\uf023"			// <= FontAwesome icons
+# define S_HIBERNATE "Hibernate"
+# define S_LOCK_ICON "\uf023"			// <= Nerd Font Icons
 # define S_RESTART_DWM_ICON "\uf01e"
 # define S_OFFSCREEN_ICON "\uf108"
 # define S_EXIT_ICON "\uf2f5"
-# define S_SUSPEND_ICON "\uf2f5"
+# define S_SUSPEND_ICON "\u23fe"
+# define S_HIBERNATE_ICON "\u23fe"
 # define S_REBOOT_ICON "\uf021"
 # define S_SHUTDOWN_ICON "\uf011"
 
@@ -48,6 +52,7 @@ void exitdwm ()
 			S_FORMAT (OFFSCREEN) "\n"
 			S_FORMAT (EXIT) "\n"
 			S_FORMAT (SUSPEND) "\n"
+			S_FORMAT (HIBERNATE) "\n"
 			S_FORMAT (REBOOT) "\n"
 			S_FORMAT (SHUTDOWN)
 			"\" | dmenu -p exit: | " S_FORMAT_CLEAR
@@ -69,6 +74,7 @@ void exitdwm ()
 	else if (strcmp (exit_action, S_RESTART_DWM) == 0) quit (& (const Arg) {1});
 	else if (strcmp (exit_action, S_OFFSCREEN) == 0) system ("sleep .5; xset dpms force off");
 	else if (strcmp (exit_action, S_SUSPEND) == 0) system ("slock & sleep .5; systemctl suspend");
+	else if (strcmp (exit_action, S_HIBERNATE) == 0) system ("slock & sleep .5; systemctl hibernate");
 	else if (strcmp (exit_action, S_EXIT) == 0) quit (& (const Arg) {0});
 	else if (strcmp (exit_action, S_REBOOT) == 0) system ("systemctl reboot");
 	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("systemctl poweroff -i");
@@ -83,11 +89,13 @@ close_streams:
 # undef S_SUSPEND
 # undef S_REBOOT
 # undef S_SHUTDOWN
+# undef S_HIBERNATE
 # undef S_LOCK_ICON
 # undef S_RESTART_DWM_ICON
 # undef S_OFFSCREEN_ICON
 # undef S_EXIT_ICON
 # undef S_SUSPEND_ICON
+# undef S_HIBERNATE_ICON
 # undef S_REBOOT_ICON
 # undef S_SHUTDOWN_ICON
 # undef S_FORMAT
