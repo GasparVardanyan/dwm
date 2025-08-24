@@ -308,7 +308,7 @@ struct {
 	},
 	.TerminalSession = {
 		.args = (const char * []) {
-			"terminal", "login", NULL
+			"terminalx", "menu", NULL
 		}
 	},
 	.Browser = {
