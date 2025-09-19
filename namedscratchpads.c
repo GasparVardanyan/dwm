@@ -64,7 +64,7 @@ struct {
 
 	.cmus = { .instance = "scratchcmus", .key = 'c',
 		.args = (const char * []) { "c",
-			"st", "-t", "cmus", "-n", "scratchcmus", "-g", "120x30", "-e", "cmus",
+			"play", "default",
 			NULL
 		}
 	},

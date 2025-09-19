@@ -18,7 +18,7 @@
 | Super+Shift         | CmusPrev       | CmusNext     | CmusToggle   |
 | Super+Control       | FlameshotFull  | FlameshotGui | CmusStop     |
 | Super+Control+Shift | scratch volume | MpvPlay      | scratch cmus |
-| Super+Alt           | MusSelect      | YtMpv        |              |
+| Super+Alt           | MusSelect      | YtMpv        | PickSink     |
 
 
 ### Superset 3 - display/brightness

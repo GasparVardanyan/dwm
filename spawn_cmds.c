@@ -13,7 +13,7 @@ struct {
 		  VolUp,                VolDown,                 VolToggle,
 		  CmusNext,             CmusPrev,                CmusToggle,           CmusStop,             MusSelect,
 		  FlameshotGui,         FlameshotFull,
-		  YtMpv,
+		  YtMpv,                PickSink,
 		  MpvPlay,
 		  BacklightUp,          BacklightDown,           BacklightMax,         BacklightMid,
 		  KbdBrightOn,          KbdBrightOff,
@@ -100,7 +100,12 @@ struct {
 
 	.YtMpv = {
 		.args = (const char * []) {
-			"sh", "-c", "ytmpv", NULL
+			"ytmpv", NULL
+		}
+	},
+	.PickSink = {
+		.args = (const char * []) {
+			"sh", "-c", "e ps", NULL
 		}
 	},
 
@@ -308,7 +313,7 @@ struct {
 	},
 	.TerminalSession = {
 		.args = (const char * []) {
-			"terminalx", "menu", NULL
+			"nspawn", "menu", NULL
 		}
 	},
 	.Browser = {
