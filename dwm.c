@@ -2138,13 +2138,21 @@ togglescratch(const Arg *arg)
 
 	if (found) {
 		if (c->mon != selmon) {
+			_Bool fs = 0;
+			if (1 == c->isfullscreen) {
+				fs = 1;
+				setfullscreen (c, 0);
+			}
+
 			sendmon (c, selmon);
-			if (c->isfullscreen) {
-				c->isfullscreen = 0;
-				setfullscreen (c, 1);
-			} else if (c->isfloating) {
+
+			if (c->isfloating) {
 				Arg arg = {.i = 0};
 				movecenter (& arg);
+			}
+
+			if (1 == fs) {
+				setfullscreen (c, 1);
 			}
 		}
 		else {
