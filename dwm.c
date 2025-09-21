@@ -92,6 +92,7 @@ struct Client {
 	int bw, oldbw;
 	unsigned int tags;
 	int isfixed, iscentered, isfloating, isalwaysontop, isurgent, neverfocus, oldstate, isfullscreen, issticky;
+	int issticky_prev;
 	char scratchkey;
 	Client *next;
 	Client *snext;
@@ -1565,6 +1566,11 @@ static void scratchpad_hide ()
 	{
 		selmon -> sel -> tags = SCRATCHPAD_MASK;
 		selmon -> sel -> isfloating = 1;
+
+		if (1 == selmon -> sel -> issticky) {
+			togglesticky (& (const Arg) { .i = 0 });
+		}
+		
 		focus(NULL);
 		arrange(selmon);
 	}
@@ -1599,6 +1605,11 @@ static void scratchpad_show ()
 		if (scratchpad_last_showed -> tags != SCRATCHPAD_MASK)
 		{
 			scratchpad_last_showed -> tags = SCRATCHPAD_MASK;
+
+			if (1 == selmon -> sel -> issticky) {
+				togglesticky (& (const Arg) { .i = 0 });
+			}
+
 			focus(NULL);
 			arrange(selmon);
 		}
@@ -1637,6 +1648,10 @@ static void scratchpad_show_client (Client * c)
 	c -> tags = selmon->tagset[selmon->seltags];
 	focus(c);
 	arrange(selmon);
+
+	if (1 == c -> issticky_prev) {
+		togglesticky (& (const Arg) { .i = 1 });
+	}
 }
 
 static void scratchpad_show_first (void)
@@ -2176,6 +2191,7 @@ togglesticky(const Arg *arg)
 {
 	if (!selmon->sel)
 		return;
+	selmon -> sel -> issticky_prev = 0 == arg->i ? 1 : 0;
     setsticky(selmon->sel, !selmon->sel->issticky);
 	arrange(selmon);
 }
