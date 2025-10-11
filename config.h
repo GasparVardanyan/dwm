@@ -53,7 +53,7 @@ static const Rule rules[] = {
 	NAMEDSCRATCHPAD_RULE ( qbg     ),    SCRATCHTAGWIN_RULE ( scratchtagwin4, 4 ),
 	NAMEDSCRATCHPAD_RULE ( qbT     ),    SCRATCHTAGWIN_RULE ( scratchtagwin5, 5 ),
 	NAMEDSCRATCHPAD_RULE ( qbt     ),    SCRATCHTAGWIN_RULE ( scratchtagwin6, 6 ),
-	NAMEDSCRATCHPAD_RULE ( cmus    ),    SCRATCHTAGWIN_RULE ( scratchtagwin7, 7 ),
+	NAMEDSCRATCHPAD_RULE ( mus     ),    SCRATCHTAGWIN_RULE ( scratchtagwin7, 7 ),
 	NAMEDSCRATCHPAD_RULE ( jb      ),    SCRATCHTAGWIN_RULE ( scratchtagwin8, 8 ),
 	NAMEDSCRATCHPAD_RULE ( systray ),    SCRATCHTAGWIN_RULE ( scratchtagwin9, 9 ),
 	NAMEDSCRATCHPAD_RULE ( qalc    ),
@@ -167,10 +167,10 @@ static Key keys[] = {
 	NSK ( MODKEY|ControlMask|ShiftMask, XK_t, qbT     )    SWK ( scratchtagwin5, 5 )
 	NSK ( MODKEY|ShiftMask,             XK_t, qbt     )    SWK ( scratchtagwin6, 6 )
 	NSK ( MODKEY,                       XK_q, qalc    )    SWK ( scratchtagwin7, 7 )
-	NSK ( MODKEY|ShiftMask,             XK_c, cmus    )    SWK ( scratchtagwin8, 8 )
+	NSK ( MODKEY|ControlMask|ShiftMask, XK_o, mus     )    SWK ( scratchtagwin8, 8 )
 	NSK ( MODKEY,                       XK_s, systray )    SWK ( scratchtagwin9, 9 )
 	// NSK ( MODKEY|ShiftMask,             XK_p, jb      )
-	NSK ( MODKEY|ControlMask|ShiftMask, XK_o, cmus    )
+
 	NSK ( MODKEY|ControlMask|ShiftMask, XK_u, volctl  )
 # undef NSK
 # undef SWK

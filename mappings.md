@@ -17,7 +17,7 @@
 | Super               | VolDown        | VolUp           | VolToggle        |
 | Super+Shift         | MusPrev        | MusNext         | MusToggle        |
 | Super+Control       | FlameshotFull  | FlameshotGui    | MusStop          |
-| Super+Control+Shift | scratch volume | MpvPlay         | scratch cmus     |
+| Super+Control+Shift | scratch volume | MpvPlay         | scratch mus      |
 | Super+Alt           | MusSelect      | YtMpv           | PickSink         |
 | Super+Alt+Control   | MusSeekForward | MusSeekBackward | MusToggleShuffle |
 | Super+Alt+Shift     |                |                 | MusToggleRepeat  |

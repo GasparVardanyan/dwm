@@ -13,7 +13,7 @@ struct {
 		const char * instance;
 		char key;
 		const char ** args;
-	} term, qb, qbw, qbg, qbT, qbt, cmus, jb, systray, qalc, volctl;
+	} term, qb, qbw, qbg, qbT, qbt, mus, jb, systray, qalc, volctl;
 } static const named_scratchpads = {
 
 	.term = { .instance = "scratchterm", .key = 's',
@@ -62,7 +62,7 @@ struct {
 		}
 	},
 
-	.cmus = { .instance = "scratchcmus", .key = 'c',
+	.mus = { .instance = "scratchmus", .key = 'c',
 		.args = (const char * []) { "c",
 			"play", "default",
 			NULL
