@@ -12,13 +12,15 @@
 
 ### Superset 2 - multimedia
 
-| modifier            | u              | i            | o            |
-|---------------------|----------------|--------------|--------------|
-| Super               | VolDown        | VolUp        | VolToggle    |
-| Super+Shift         | CmusPrev       | CmusNext     | CmusToggle   |
-| Super+Control       | FlameshotFull  | FlameshotGui | CmusStop     |
-| Super+Control+Shift | scratch volume | MpvPlay      | scratch cmus |
-| Super+Alt           | MusSelect      | YtMpv        | PickSink     |
+| modifier            | u              | i               | o                |
+|---------------------|----------------|-----------------|------------------|
+| Super               | VolDown        | VolUp           | VolToggle        |
+| Super+Shift         | MusPrev        | MusNext         | MusToggle        |
+| Super+Control       | FlameshotFull  | FlameshotGui    | MusStop          |
+| Super+Control+Shift | scratch volume | MpvPlay         | scratch cmus     |
+| Super+Alt           | MusSelect      | YtMpv           | PickSink         |
+| Super+Alt+Control   | MusSeekForward | MusSeekBackward | MusToggleShuffle |
+| Super+Alt+Shift     |                |                 | MusToggleRepeat  |
 
 
 ### Superset 3 - display/brightness

@@ -9,29 +9,30 @@ struct {
 	struct {
 		const char ** args;
 	}
-		  Terminal,             Dmenu,
-		  VolUp,                VolDown,                 VolToggle,
-		  CmusNext,             CmusPrev,                CmusToggle,           CmusStop,             MusSelect,
-		  FlameshotGui,         FlameshotFull,
-		  YtMpv,                PickSink,
-		  MpvPlay,
-		  BacklightUp,          BacklightDown,           BacklightMax,         BacklightMid,
-		  KbdBrightOn,          KbdBrightOff,
-		  Screen2560,           Screen1920,
-		  PassFill,             PassFillConfirm,         PassFillU,            PassFillUConfirm,
-		  Task,                 Todo,
-		  AWCC,
-		  FileLaunch,           FileLaunchFuzzy,         DmenuFM,
-		  ArchWikiDmenu,        ArchWikiSelection,
-		  ChtShDmenu,           ChtShSelection,
-		  TldrDmenu,            TldrSelection,
-		  TranslateDmenu,       TranslateSelection,
-		  ZdictDmenu,           ZdictSelection,
-		  WhiteScreen,          BlackScreen,
-		  KbdSwitch,            Keym,                    EmojiCopy,            ClipMenu,             SelEdit,
-		  ManBrowse,
-		  DunstClose,           TerminalSession,         Browser,              SfeedCurses,          Lock,       ConfEdit,
-		  NeoVim;
+		Terminal,           Dmenu,
+		VolUp,              VolDown,             VolToggle,
+		MusNext,            MusPrev,             MusToggle,        MusStop,           MusSelect,
+		MusToggleShuffle,   MusToggleRepeat,     MusSeekForward,   MusSeekBackward,
+		FlameshotGui,       FlameshotFull,
+		YtMpv,              PickSink,
+		MpvPlay,
+		BacklightUp,        BacklightDown,       BacklightMax,     BacklightMid,
+		KbdBrightOn,        KbdBrightOff,
+		Screen2560,         Screen1920,
+		PassFill,           PassFillConfirm,     PassFillU,        PassFillUConfirm,
+		Task,               Todo,
+		AWCC,
+		FileLaunch,         FileLaunchFuzzy,     DmenuFM,
+		ArchWikiDmenu,      ArchWikiSelection,
+		ChtShDmenu,         ChtShSelection,
+		TldrDmenu,          TldrSelection,
+		TranslateDmenu,     TranslateSelection,
+		ZdictDmenu,         ZdictSelection,
+		WhiteScreen,        BlackScreen,
+		KbdSwitch,          Keym,                EmojiCopy,        ClipMenu,          SelEdit,
+		ManBrowse,
+		DunstClose,         TerminalSession,     Browser,          SfeedCurses,       Lock,       ConfEdit,
+		NeoVim;
 } static const launchers = {
 
 	.Terminal = {
@@ -61,22 +62,22 @@ struct {
 		}
 	},
 
-	.CmusPrev = {
+	.MusPrev = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl prev && dwmstatus", NULL
 		}
 	},
-	.CmusNext = {
+	.MusNext = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl next && dwmstatus", NULL
 		}
 	},
-	.CmusToggle = {
+	.MusToggle = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl toggle_play && dwmstatus", NULL
 		}
 	},
-	.CmusStop = {
+	.MusStop = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl stop && dwmstatus", NULL
 		}
@@ -84,6 +85,30 @@ struct {
 	.MusSelect = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl select_source && dwmstatus", NULL
+		}
+	},
+
+	.MusToggleShuffle = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl toggle_shuffle && dwmstatus", NULL
+		}
+	},
+
+	.MusToggleRepeat = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl toggle_repeat && dwmstatus", NULL
+		}
+	},
+
+	.MusSeekForward = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl seekf", NULL
+		}
+	},
+
+	.MusSeekBackward = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl seekb", NULL
 		}
 	},
 
