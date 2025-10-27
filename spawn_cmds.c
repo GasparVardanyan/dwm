@@ -10,15 +10,15 @@ struct {
 		const char ** args;
 	}
 		Terminal,           Dmenu,
-		VolUp,              VolDown,             VolToggle,
-		MusNext,            MusPrev,             MusToggle,        MusStop,           MusSelect,
-		MusToggleShuffle,   MusToggleRepeat,     MusSeekForward,   MusSeekBackward,
+		VolDown,            VolUp,               VolToggle,
+		MusPrev,            MusNext,             MusToggle,        MusStop,           MusSelect,
+		MusToggleShuffle,   MusToggleRepeat,     MusSeekBackward,   MusSeekForward,   MusToggleVid,
 		FlameshotGui,       FlameshotFull,
 		YtMpv,              PickSink,
-		MpvPlay,
-		BacklightUp,        BacklightDown,       BacklightMax,     BacklightMid,
-		KbdBrightOn,        KbdBrightOff,
-		Screen2560,         Screen1920,
+		MusPlay,
+		BacklightDown,      BacklightUp,         BacklightMid,     BacklightMax,
+		KbdBrightOff,       KbdBrightOn,
+		Screen1920,         Screen2560,
 		PassFill,           PassFillConfirm,     PassFillU,        PassFillUConfirm,
 		Task,               Todo,
 		AWCC,
@@ -93,22 +93,24 @@ struct {
 			"sh", "-c", "plctrl toggle_shuffle && dwmstatus", NULL
 		}
 	},
-
 	.MusToggleRepeat = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl toggle_repeat && dwmstatus", NULL
 		}
 	},
-
+	.MusSeekBackward = {
+		.args = (const char * []) {
+			"sh", "-c", "plctrl seekb", NULL
+		}
+	},
 	.MusSeekForward = {
 		.args = (const char * []) {
 			"sh", "-c", "plctrl seekf", NULL
 		}
 	},
-
-	.MusSeekBackward = {
+	.MusToggleVid = {
 		.args = (const char * []) {
-			"sh", "-c", "plctrl seekb", NULL
+			"sh", "-c", "plctrl toggle_vid", NULL
 		}
 	},
 
@@ -134,7 +136,7 @@ struct {
 		}
 	},
 
-	.MpvPlay = {
+	.MusPlay = {
 		.args = (const char * []) {
 			"play", NULL
 		}
@@ -150,25 +152,25 @@ struct {
 			"brightnessctl", "-q", "s", "10%+", NULL
 		}
 	},
-	.BacklightMax = {
-		.args = (const char * []) {
-			"brightnessctl", "-q", "s", "100%", NULL
-		}
-	},
 	.BacklightMid = {
 		.args = (const char * []) {
 			"brightnessctl", "-q", "s", "20%", NULL
 		}
 	},
-
-	.KbdBrightOn = {
+	.BacklightMax = {
 		.args = (const char * []) {
-			"awcc", "brightness", "0", NULL
+			"brightnessctl", "-q", "s", "100%", NULL
 		}
 	},
+
 	.KbdBrightOff = {
 		.args = (const char * []) {
 			"awcc", "brightness", "100", NULL
+		}
+	},
+	.KbdBrightOn = {
+		.args = (const char * []) {
+			"awcc", "brightness", "0", NULL
 		}
 	},
 
@@ -180,12 +182,6 @@ struct {
 	.Screen2560 = {
 		.args = (const char * []) {
 			"xrandr", "--output", "eDP-1", "--mode", "2560x1600", "--rate", "60", NULL
-		}
-	},
-
-	.AWCC = {
-		.args = (const char * []) {
-			"awcc_dmenu", NULL
 		}
 	},
 
@@ -221,6 +217,12 @@ struct {
 		}
 	},
 
+	.AWCC = {
+		.args = (const char * []) {
+			"awcc_dmenu", NULL
+		}
+	},
+
 	.FileLaunch = {
 		.args = (const char * []) {
 			"sfl", "d", NULL
@@ -247,6 +249,7 @@ struct {
 			"selaction", "wiki", "selection", NULL
 		}
 	},
+
 	.ChtShDmenu = {
 		.args = (const char * []) {
 			"selaction", "chtsh", "dmenu", NULL
@@ -257,6 +260,7 @@ struct {
 			"selaction", "chtsh", "selection", NULL
 		}
 	},
+
 	.TldrDmenu = {
 		.args = (const char * []) {
 			"selaction", "tldr", "dmenu", NULL
@@ -267,6 +271,7 @@ struct {
 			"selaction", "tldr", "selection", NULL
 		}
 	},
+
 	.TranslateDmenu = {
 		.args = (const char * []) {
 			"selaction", "translate", "dmenu", NULL
@@ -277,6 +282,7 @@ struct {
 			"selaction", "translate", "selection", NULL
 		}
 	},
+
 	.ZdictDmenu = {
 		.args = (const char * []) {
 			"selaction", "urban", "dmenu", NULL
