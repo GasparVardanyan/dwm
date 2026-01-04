@@ -144,12 +144,12 @@ struct {
 
 	.BacklightDown = {
 		.args = (const char * []) {
-			"brightnessctl", "-q", "s", "10%-", NULL
+			"brightnessctl", "-q", "s", "2%-", NULL
 		}
 	},
 	.BacklightUp = {
 		.args = (const char * []) {
-			"brightnessctl", "-q", "s", "10%+", NULL
+			"brightnessctl", "-q", "s", "2%+", NULL
 		}
 	},
 	.BacklightMid = {
