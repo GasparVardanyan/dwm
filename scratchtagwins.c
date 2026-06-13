@@ -4,18 +4,28 @@
 
 #include <X11/XF86keysym.h>
 
+// # define SCRATCHTAGWIN(name, id)								\
+// 	static const char * name [] = { # id,						\
+// 			"tabbed",											\
+// 			"-p", "s+1",										\
+// 			"-n", # name,										\
+// 			"-g", "1212x680",									\
+// 			"-c", "alacritty", "--embed",						\
+// 		NULL													\
+// 	}															\
+
 # define SCRATCHTAGWIN(name, id)								\
 	static const char * name [] = { # id,						\
-			"tabbed",											\
-			"-p", "s+1",										\
-			"-n", # name,										\
-			"-g", "1212x680",									\
-			"-c", "alacritty", "--embed",						\
+			"contour",											\
+			"class", # name,									\
 		NULL													\
 	}															\
 
+// # define SCRATCHTAGWIN_RULE(name, id)																	\
+// 	{ NULL,       # name, NULL,       0,            1,           1,           -1,      '0' + id }		\
+
 # define SCRATCHTAGWIN_RULE(name, id)																	\
-	{ NULL,       # name, NULL,       0,            1,           1,           -1,      '0' + id }		\
+	{ # name,       NULL, NULL,       0,            1,           1,           -1,      '0' + id }		\
 
 # define SCRATCHTAGWIN_KEY(name, id)														\
 	{ MODKEY|AltMask,          XK_ ## id,      togglescratch,  {.v = name } },				\

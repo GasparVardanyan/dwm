@@ -5,6 +5,9 @@
 # define NAMEDSCRATCHPAD_RULE(scratchpad) \
 	{ NULL, named_scratchpads.scratchpad.instance, NULL, 0, 1, 1, -1, named_scratchpads.scratchpad.key}
 
+# define NAMEDSCRATCHPAD_RULE_CONTOURSPECIAL(scratchpad) \
+	{ named_scratchpads.scratchpad.instance, NULL, NULL, 0, 1, 1, -1, named_scratchpads.scratchpad.key}
+
 # define NAMEDSCRATCHPAD_KEY(mod,keysym,scratchpad) \
 	{ mod, keysym, togglescratch, {.v = named_scratchpads.scratchpad.args } },
 
@@ -18,11 +21,12 @@ struct {
 
 	.term = { .instance = "scratchterm", .key = 's',
 		.args = (const char * []) { "s",
-			"tabbed",
-				"-p", "s+1",
-				"-n", "scratchterm",
-				"-g", "1212x680",
-				"-c", "alacritty", "--embed",
+			// "tabbed",
+			// 	"-p", "s+1",
+			// 	"-n", "scratchterm",
+			// 	"-g", "1212x680",
+			// 	"-c", "alacritty", "--embed",
+			"contour",  "class", "scratchterm",
 			NULL
 		}
 	},

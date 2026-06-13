@@ -47,7 +47,7 @@ static const Rule rules[] = {
 	{ NULL,     "megasync", NULL,    0,           1,            1,            -1,        0 },
 	{ "mpv",    NULL,       NULL,    0,           1,            1,            -1,        0 },
 
-	NAMEDSCRATCHPAD_RULE ( term    ),    SCRATCHTAGWIN_RULE ( scratchtagwin1, 1 ),
+	NAMEDSCRATCHPAD_RULE_CONTOURSPECIAL ( term    ),    SCRATCHTAGWIN_RULE ( scratchtagwin1, 1 ),
 	NAMEDSCRATCHPAD_RULE ( qb      ),    SCRATCHTAGWIN_RULE ( scratchtagwin2, 2 ),
 	NAMEDSCRATCHPAD_RULE ( qbw     ),    SCRATCHTAGWIN_RULE ( scratchtagwin3, 3 ),
 	NAMEDSCRATCHPAD_RULE ( qbg     ),    SCRATCHTAGWIN_RULE ( scratchtagwin4, 4 ),
