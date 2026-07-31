@@ -21,12 +21,12 @@ struct {
 
 	.term = { .instance = "scratchterm", .key = 's',
 		.args = (const char * []) { "s",
-			// "tabbed",
-			// 	"-p", "s+1",
-			// 	"-n", "scratchterm",
-			// 	"-g", "1212x680",
-			// 	"-c", "alacritty", "--embed",
-			"contour",  "class", "scratchterm",
+			"tabbed",
+				"-p", "s+1",
+				"-n", "scratchterm",
+				"-g", "1212x680",
+				"-c", "alacritty", "--embed",
+			// "contour",  "class", "scratchterm",
 			NULL
 		}
 	},

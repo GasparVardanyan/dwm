@@ -47,7 +47,8 @@ static const Rule rules[] = {
 	{ NULL,     "megasync", NULL,    0,           1,            1,            -1,        0 },
 	{ "mpv",    NULL,       NULL,    0,           1,            1,            -1,        0 },
 
-	NAMEDSCRATCHPAD_RULE_CONTOURSPECIAL ( term    ),    SCRATCHTAGWIN_RULE ( scratchtagwin1, 1 ),
+	// NOTE: use NAMEDSCRATCHPAD_RULE_CONTOURSPECIAL for contour
+	NAMEDSCRATCHPAD_RULE ( term    ),    SCRATCHTAGWIN_RULE ( scratchtagwin1, 1 ),
 	NAMEDSCRATCHPAD_RULE ( qb      ),    SCRATCHTAGWIN_RULE ( scratchtagwin2, 2 ),
 	NAMEDSCRATCHPAD_RULE ( qbw     ),    SCRATCHTAGWIN_RULE ( scratchtagwin3, 3 ),
 	NAMEDSCRATCHPAD_RULE ( qbg     ),    SCRATCHTAGWIN_RULE ( scratchtagwin4, 4 ),
@@ -187,6 +188,8 @@ static Key keys[] = {
 	// SPAWN_KEY     (   MODKEY|ControlMask,                           XK_i,                BacklightUp             )
 	SPAWN_KEY     (   MODKEY|ControlMask,                           XK_u,                FlameshotFull           )
 	SPAWN_KEY     (   MODKEY|ControlMask,                           XK_i,                FlameshotGui            )
+	// SPAWN_KEY     (   MODKEY|ControlMask,                           XK_u,                ScrotFull               )
+	// SPAWN_KEY     (   MODKEY|ControlMask,                           XK_i,                ScrotSelect             )
 	SPAWN_KEY     (   MODKEY|ControlMask,                           XK_o,                MusStop                 )
 	SPAWN_KEY     (   MODKEY|ControlMask|ShiftMask,                 XK_i,                MusPlay                 )
 	SPAWN_KEY     (   MODKEY|AltMask,                               XK_u,                MusSelect               )
@@ -199,6 +202,8 @@ static Key keys[] = {
 	SPAWN_KEY     (   MODKEY|AltMask|ControlMask|ShiftMask,         XK_o,                MusToggleVid            )
 	SPAWN_KEY     (   0,                                            XK_Print,            FlameshotFull           )
 	SPAWN_KEY     (   ShiftMask,                                    XK_Print,            FlameshotGui            )
+	// SPAWN_KEY     (   0,                                            XK_Print,            ScrotFull               )
+	// SPAWN_KEY     (   ShiftMask,                                    XK_Print,            ScrotSelect             )
 	SPAWN_KEY     (   MODKEY,                                       XK_backslash,        PassFill                )
 	SPAWN_KEY     (   MODKEY|ShiftMask,                             XK_backslash,        PassFillConfirm         )
 	SPAWN_KEY     (   MODKEY|ControlMask,                           XK_backslash,        PassFillU               )

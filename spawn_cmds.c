@@ -12,8 +12,8 @@ struct {
 		Terminal,           Dmenu,
 		VolDown,            VolUp,               VolToggle,
 		MusPrev,            MusNext,             MusToggle,        MusStop,           MusSelect,
-		MusToggleShuffle,   MusToggleRepeat,     MusSeekBackward,   MusSeekForward,   MusToggleVid,
-		FlameshotGui,       FlameshotFull,
+		MusToggleShuffle,   MusToggleRepeat,     MusSeekBackward,  MusSeekForward,   MusToggleVid,
+		FlameshotGui,       FlameshotFull,       ScrotSelect,      ScrotFull,
 		YtMpv,              PickSink,
 		MusPlay,
 		BacklightDown,      BacklightUp,         BacklightMid,     BacklightMax,
@@ -37,8 +37,8 @@ struct {
 
 	.Terminal = {
 		.args = (const char * []) {
-			// "tabbed", "-p", "s+1", "-c", "alacritty", "--embed", NULL
-			"contour", NULL
+			"tabbed", "-p", "s+1", "-c", "alacritty", "--embed", NULL
+			// "contour", NULL
 		}
 	},
 	.Dmenu = {
@@ -123,6 +123,16 @@ struct {
 	.FlameshotFull = {
 		.args = (const char * []) {
 			"sh", "-c", "mkdir -p $HOME/screenshots && flameshot full --path $HOME/screenshots", NULL
+		}
+	},
+	.ScrotFull = {
+		.args = (const char * []) {
+			"sh", "-c", "scrot -q 100 -e 'xclip -sel clip -t image/png $f; mkdir -p ~/screenshots ; magick $f $f ; mv $f ~/screenshots'", NULL
+		}
+	},
+	.ScrotSelect = {
+		.args = (const char * []) {
+			"sh", "-c", "scrot -q 100 -s -e 'xclip -sel clip -t image/png $f; mkdir -p ~/screenshots ; magick $f $f ; mv $f ~/screenshots'", NULL
 		}
 	},
 
@@ -371,8 +381,8 @@ struct {
 
 	.NeoVim = {
 		.args = (const char * []) {
-			// "alacritty", "-T", "NeoVim PDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim nvim", NULL
-			"contour", "execute", "nvim", NULL
+			"alacritty", "-T", "NeoVim PDE", "-e", "sh", "-c", "NVIM_APPNAME=nvim nvim", NULL
+			// "contour", "execute", "nvim", NULL
 		}
 	},
 };
